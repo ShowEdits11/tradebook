@@ -404,7 +404,7 @@ body{
 
   <div class="storage-banner" id="storage-banner">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.86 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L14.7 3.86a2 2 0 0 0-3.4 0Z"/></svg>
-    <span>Auto-save isn't available in this session (opened outside Claude.ai). Your entries will only last until you close this tab — use <strong>Export</strong> to back them up, and <strong>Import</strong> to bring them back next time.</span>
+    <span>Auto-save is blocked in this browser right now (private/incognito mode or storage permissions can cause this). Your entries will only last until you close this tab — use <strong>Export</strong> to back them up, and <strong>Import</strong> to bring them back next time.</span>
     <button class="icon-btn" id="dismiss-banner" title="Dismiss">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
     </button>
@@ -842,7 +842,7 @@ let formState = {
   ratingExecution: 5
 };
 
-let storageAvailable = true;
+let storageMode = 'memory'; // 'claude' | 'local' | 'memory' — decided at load time
 
 /* ============================================================
    UTILITIES
@@ -904,31 +904,76 @@ function emptyStateHtml(message, sub){
 }
 
 /* ============================================================
-   STORAGE (Claude artifact persistent storage)
+   STORAGE
+   Auto-save works two ways, tried in order:
+   1) Claude's built-in artifact storage (when viewed inside claude.ai)
+   2) Your browser's own localStorage (when you open this file directly
+      in a browser — this is what makes it work fully offline/standalone)
+   If neither is available, trades stay in memory only for the session.
    ============================================================ */
-aasync function loadTrades(){
+const LS_KEY = 'tradeJournal_trades_v1';
 
-    const saved = localStorage.getItem("tradeJournalData");
+function testLocalStorage(){
+  try {
+    const k = '__tj_probe__';
+    localStorage.setItem(k, '1');
+    localStorage.removeItem(k);
+    return true;
+  } catch (e){
+    return false;
+  }
+}
 
-    if(saved){
-
-        state.trades = JSON.parse(saved);
-
-        return;
-
+async function loadTrades(){
+  if (typeof window.storage !== 'undefined'){
+    storageMode = 'claude';
+    try {
+      const res = await window.storage.get(STORAGE_KEY, false);
+      state.trades = (res && res.value) ? JSON.parse(res.value) : [];
+    } catch (e){
+      state.trades = [];
     }
-
-    state.trades = [];
-
+    return;
+  }
+  if (testLocalStorage()){
+    storageMode = 'local';
+    try {
+      const raw = localStorage.getItem(LS_KEY);
+      state.trades = raw ? JSON.parse(raw) : [];
+    } catch (e){
+      state.trades = [];
+    }
+    return;
+  }
+  storageMode = 'memory';
+  state.trades = [];
+  showStorageBanner();
 }
 
 async function saveTrades(){
+  if (storageMode === 'claude'){
+    try {
+      const res = await window.storage.set(STORAGE_KEY, JSON.stringify(state.trades), false);
+      if (!res) showToast('Could not save — storage error.', 'error');
+    } catch (e){
+      showToast('Could not save — storage error.', 'error');
+    }
+    return;
+  }
+  if (storageMode === 'local'){
+    try {
+      localStorage.setItem(LS_KEY, JSON.stringify(state.trades));
+    } catch (e){
+      showToast('Could not save — browser storage may be full.', 'error');
+    }
+    return;
+  }
+  // memory mode: nothing to persist to; the banner already told the user
+}
 
-    localStorage.setItem(
-        "tradeJournalData",
-        JSON.stringify(state.trades)
-    );
-
+function showStorageBanner(){
+  const banner = document.getElementById('storage-banner');
+  if (banner) banner.style.display = 'flex';
 }
 
 /* ============================================================
@@ -1386,10 +1431,6 @@ async function handleFormSubmit(e){
     state.trades.push(trade);
   }
   await saveTrades();
-  localStorage.setItem(
-    "tradeJournalData",
-    JSON.stringify(state.trades)
-);
   showToast(wasEditing ? 'Trade updated.' : 'Trade saved.', 'success');
   resetForm();
   renderHeaderStats();
@@ -1573,10 +1614,6 @@ function confirmDeleteTrade(id){
   openConfirmModal('Delete this ' + trade.instrument + ' trade from ' + formatDateShort(trade.date) + '? This can\'t be undone.', async () => {
     state.trades = state.trades.filter(t => t.id !== id);
     await saveTrades();
-    localStorage.setItem(
-    "tradeJournalData",
-    JSON.stringify(state.trades)
-);
     closeModal();
     showToast('Trade deleted.', 'success');
     renderHistoryTab();
@@ -2065,276 +2102,6 @@ async function init(){
 }
 
 document.addEventListener('DOMContentLoaded', init);
-setInterval(() => {
-
-    saveTrades();
-
-},1000);
-window.addEventListener("beforeunload",function(){
-
-    saveTrades();
-
-});
-</script>
-
-<script>
-/* ===========================================
-   TRADE JOURNAL AUTO SAVE
-   =========================================== */
-
-const AUTO_SAVE_KEY = "tradeJournal_AutoSave_v1";
-let autoSaveTimer = null;
-
-// Save all form values
-function autoSave() {
-
-    const data = {};
-
-    // Save inputs, selects, textareas
-    document.querySelectorAll("input, textarea, select").forEach(el => {
-
-        if (!el.id && !el.name) return;
-
-        const key = el.id || el.name;
-
-        if (el.type === "checkbox") {
-            data[key] = el.checked;
-        }
-        else if (el.type === "radio") {
-            if (el.checked) data[key] = el.value;
-        }
-        else {
-            data[key] = el.value;
-        }
-
-    });
-
-    // Save selected chips
-    data.selectedChips = [];
-
-    document.querySelectorAll(".chip.selected").forEach(chip=>{
-        data.selectedChips.push({
-            group: chip.dataset.chipGroup,
-            value: chip.dataset.value
-        });
-    });
-
-    // Save selected strategies
-    data.selectedStrategies = [];
-
-    document.querySelectorAll(".strategy-card.selected").forEach(card=>{
-        data.selectedStrategies.push(card.dataset.value);
-    });
-
-    // Save star ratings
-    data.starRatings = {};
-
-    document.querySelectorAll(".star.filled").forEach(star=>{
-
-        const group = star.dataset.starGroup;
-        const value = parseInt(star.dataset.value);
-
-        data.starRatings[group] = value;
-
-    });
-
-    // Save current tab
-    const activeTab = document.querySelector(".tab-btn.active");
-
-    if(activeTab)
-        data.activeTab = activeTab.dataset.tab;
-
-    // Save localStorage
-    localStorage.setItem(
-        AUTO_SAVE_KEY,
-        JSON.stringify(data)
-    );
-
-    showAutoSaveStatus("Saved ✓");
-
-}
-
-// Restore everything
-function restoreAutoSave(){
-
-    const json = localStorage.getItem(AUTO_SAVE_KEY);
-
-    if(!json) return;
-
-    const data = JSON.parse(json);
-
-    // Restore inputs
-    document.querySelectorAll("input, textarea, select").forEach(el=>{
-
-        const key = el.id || el.name;
-
-        if(!key) return;
-
-        if(data[key]===undefined) return;
-
-        if(el.type==="checkbox")
-            el.checked=data[key];
-        else
-            el.value=data[key];
-
-    });
-
-    // Restore chips
-    if(data.selectedChips){
-
-        document.querySelectorAll(".chip").forEach(c=>{
-            c.classList.remove("selected");
-        });
-
-        data.selectedChips.forEach(item=>{
-
-            const chip=document.querySelector(
-                `.chip[data-chip-group="${item.group}"][data-value="${item.value}"]`
-            );
-
-            if(chip)
-                chip.classList.add("selected");
-
-        });
-
-    }
-
-    // Restore strategies
-    if(data.selectedStrategies){
-
-        document.querySelectorAll(".strategy-card").forEach(card=>{
-            card.classList.remove("selected");
-        });
-
-        data.selectedStrategies.forEach(value=>{
-
-            const card=document.querySelector(
-                `.strategy-card[data-value="${value}"]`
-            );
-
-            if(card)
-                card.classList.add("selected");
-
-        });
-
-    }
-
-    // Restore stars
-    if(data.starRatings){
-
-        Object.keys(data.starRatings).forEach(group=>{
-
-            const value=data.starRatings[group];
-
-            document.querySelectorAll(
-                `.star[data-star-group="${group}"]`
-            ).forEach(star=>{
-
-                if(parseInt(star.dataset.value)<=value)
-                    star.classList.add("filled");
-                else
-                    star.classList.remove("filled");
-
-            });
-
-        });
-
-    }
-
-    // Restore tab
-    if(data.activeTab){
-
-        document.querySelectorAll(".tab-btn").forEach(btn=>{
-
-            btn.classList.remove("active");
-
-            if(btn.dataset.tab===data.activeTab)
-                btn.classList.add("active");
-
-        });
-
-        document.querySelectorAll(".tab-panel").forEach(panel=>{
-
-            panel.classList.remove("active");
-
-            if(panel.id==="tab-"+data.activeTab)
-                panel.classList.add("active");
-
-        });
-
-    }
-
-    console.log("Auto Save Restored");
-
-}
-
-// Auto save while typing
-document.addEventListener("input",()=>{
-
-    clearTimeout(autoSaveTimer);
-
-    showAutoSaveStatus("Saving...");
-
-    autoSaveTimer=setTimeout(autoSave,500);
-
-});
-
-// Auto save on click
-document.addEventListener("click",e=>{
-
-    if(
-        e.target.classList.contains("chip") ||
-        e.target.classList.contains("strategy-card") ||
-        e.target.classList.contains("star") ||
-        e.target.closest(".chip") ||
-        e.target.closest(".strategy-card") ||
-        e.target.closest(".star")
-    ){
-
-        clearTimeout(autoSaveTimer);
-
-        autoSaveTimer=setTimeout(autoSave,300);
-
-    }
-
-});
-
-// Restore on load
-window.addEventListener("load",restoreAutoSave);
-
-// Save before closing
-window.addEventListener("beforeunload",autoSave);
-
-/* ---------- Status ---------- */
-
-function showAutoSaveStatus(text){
-
-    let box=document.getElementById("autosave-status");
-
-    if(!box){
-
-        box=document.createElement("div");
-
-        box.id="autosave-status";
-
-        box.style.position="fixed";
-        box.style.right="20px";
-        box.style.bottom="20px";
-        box.style.background="#111";
-        box.style.color="#fff";
-        box.style.padding="8px 14px";
-        box.style.borderRadius="8px";
-        box.style.fontSize="13px";
-        box.style.zIndex="99999";
-        box.style.opacity="0.95";
-
-        document.body.appendChild(box);
-
-    }
-
-    box.innerHTML=text;
-
-}
 </script>
 </body>
 </html>
