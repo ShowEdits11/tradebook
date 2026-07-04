@@ -906,36 +906,28 @@ function emptyStateHtml(message, sub){
 /* ============================================================
    STORAGE (Claude artifact persistent storage)
    ============================================================ */
-async function loadTrades(){
+aasync function loadTrades(){
 
-    try{
+    const saved = localStorage.getItem("tradeJournalData");
 
-        const data = localStorage.getItem("tradeJournalData");
+    if(saved){
 
-        state.trades = data ? JSON.parse(data) : [];
+        state.trades = JSON.parse(saved);
 
-    }catch(e){
-
-        state.trades = [];
+        return;
 
     }
+
+    state.trades = [];
 
 }
 
 async function saveTrades(){
 
-    try{
-
-        localStorage.setItem(
-            "tradeJournalData",
-            JSON.stringify(state.trades)
-        );
-
-    }catch(e){
-
-        console.error(e);
-
-    }
+    localStorage.setItem(
+        "tradeJournalData",
+        JSON.stringify(state.trades)
+    );
 
 }
 
@@ -1394,6 +1386,10 @@ async function handleFormSubmit(e){
     state.trades.push(trade);
   }
   await saveTrades();
+  localStorage.setItem(
+    "tradeJournalData",
+    JSON.stringify(state.trades)
+);
   showToast(wasEditing ? 'Trade updated.' : 'Trade saved.', 'success');
   resetForm();
   renderHeaderStats();
@@ -1577,6 +1573,10 @@ function confirmDeleteTrade(id){
   openConfirmModal('Delete this ' + trade.instrument + ' trade from ' + formatDateShort(trade.date) + '? This can\'t be undone.', async () => {
     state.trades = state.trades.filter(t => t.id !== id);
     await saveTrades();
+    localStorage.setItem(
+    "tradeJournalData",
+    JSON.stringify(state.trades)
+);
     closeModal();
     showToast('Trade deleted.', 'success');
     renderHistoryTab();
