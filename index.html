@@ -270,1273 +270,1795 @@ body{
 .stat-label{font-size:10.5px;text-transform:uppercase;letter-spacing:0.5px;color:var(--parchment-faint);margin-bottom:6px;}
 .stat-value{font-family:var(--mono);font-size:21px;font-weight:600;color:var(--parchment);}
 .tone-green{color:var(--green-bright);}
-.tone-re  --line:rgba(255,255,255,.07);
-  --radius-lg:18px;
-  --radius-md:12px;
-  --radius-sm:8px;
-  --font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  --font-mono:'JetBrains Mono','SFMono-Regular',Consolas,'Liberation Mono',monospace;
-  --shadow-card:0 8px 30px rgba(0,0,0,.35);
+.tone-red{color:var(--red-bright);}
+
+/* calendar */
+.calendar-nav{display:flex;align-items:center;gap:10px;}
+#cal-month-label{font-family:var(--serif);font-size:15px;min-width:150px;text-align:center;color:var(--gold-bright);}
+.calendar-wrap{padding:16px;}
+.calendar-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:8px;}
+.calendar-weekdays span{text-align:center;font-size:10.5px;text-transform:uppercase;letter-spacing:0.5px;color:var(--parchment-faint);padding:4px;}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
+.day-cell{aspect-ratio:1/0.82;border-radius:10px;border:1px solid var(--hairline);background:rgba(237,231,217,0.02);padding:8px;display:flex;flex-direction:column;gap:4px;cursor:default;transition:all .15s;}
+.day-cell.muted{opacity:0.25;}
+.day-cell.today{border-color:var(--hairline-gold);box-shadow:0 0 0 1px var(--hairline-gold) inset;}
+.day-cell.day-green{background:var(--green-dim);border-color:rgba(90,171,116,0.3);cursor:pointer;}
+.day-cell.day-red{background:var(--red-dim);border-color:rgba(193,88,77,0.3);cursor:pointer;}
+.day-cell.day-neutral{background:rgba(237,231,217,0.05);cursor:pointer;}
+.day-cell.day-green:hover,.day-cell.day-red:hover,.day-cell.day-neutral:hover{transform:translateY(-2px);}
+.day-num{font-family:var(--mono);font-size:12px;color:var(--parchment-dim);}
+.day-pnl{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--parchment);margin-top:auto;}
+.day-cell.day-green .day-pnl{color:var(--green-bright);}
+.day-cell.day-red .day-pnl{color:var(--red-bright);}
+.day-count{font-size:9.5px;color:var(--parchment-faint);}
+.day-detail{margin-top:16px;padding:18px 20px;display:none;}
+.day-detail.visible{display:block;}
+.day-detail-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.day-detail-header h4{margin:0;font-family:var(--serif);font-size:15px;color:var(--gold-bright);}
+.day-trade-item{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--hairline);font-size:13px;cursor:pointer;}
+.day-trade-item:last-child{border-bottom:none;}
+.day-trade-item:hover{color:var(--gold-bright);}
+
+/* analytics */
+.analytics-row{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px;}
+.chart-card{padding:20px 22px;}
+.chart-card h3{font-family:var(--serif);font-size:15px;margin:0 0 4px;color:var(--parchment);}
+.chart-card-sm{display:flex;flex-direction:column;}
+.chart-empty{padding:40px 10px;text-align:center;color:var(--parchment-faint);font-size:13px;}
+.donut-wrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:center;flex:1;}
+.donut-legend{display:flex;flex-direction:column;gap:8px;}
+.donut-legend-item{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--parchment-dim);}
+.donut-legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+.donut-total{font-family:var(--mono);font-weight:700;fill:var(--parchment);font-size:26px;}
+.donut-label{font-family:var(--sans);fill:var(--parchment-faint);font-size:10px;text-transform:uppercase;letter-spacing:0.4px;}
+.equity-svg,.spaghetti-svg{width:100%;height:auto;display:block;}
+.zero-line{stroke:rgba(237,231,217,0.18);stroke-width:1;stroke-dasharray:3 4;}
+.axis-label{font-family:var(--mono);font-size:9.5px;fill:var(--parchment-faint);}
+
+.breakdown-card{padding:20px 22px;margin-bottom:16px;}
+.breakdown-card h3{font-family:var(--serif);font-size:15px;margin:0 0 4px;color:var(--parchment);}
+.breakdown-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.breakdown-grid .breakdown-card{margin-bottom:0;}
+.breakdown-row{display:grid;grid-template-columns:minmax(90px,1.3fr) 70px minmax(90px,1fr) minmax(110px,1fr);align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--hairline);}
+.breakdown-row:last-child{border-bottom:none;}
+.breakdown-label{font-size:12.5px;color:var(--parchment);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.breakdown-count{font-size:11px;color:var(--parchment-faint);white-space:nowrap;}
+.breakdown-winrate,.breakdown-pnl-bar{display:flex;align-items:center;gap:8px;}
+.breakdown-winrate span,.breakdown-pnl-bar span{font-size:11.5px;min-width:52px;text-align:right;flex-shrink:0;}
+.mini-bar-track{flex:1;height:6px;border-radius:4px;background:rgba(237,231,217,0.07);overflow:hidden;}
+.mini-bar-fill{height:100%;border-radius:4px;background:var(--gold);}
+.mini-bar-fill.fill-green{background:var(--green);}
+.mini-bar-fill.fill-red{background:var(--red);}
+
+.psych-tabs{display:flex;gap:8px;margin-bottom:14px;}
+.psych-tab-btn{padding:7px 15px;border-radius:9px;border:1px solid var(--hairline);background:rgba(237,231,217,0.03);color:var(--parchment-dim);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;}
+.psych-tab-btn:hover{background:var(--panel-hover);}
+.psych-tab-btn.active{background:rgba(201,162,39,0.14);border-color:var(--hairline-gold);color:var(--gold-bright);}
+
+/* simulation */
+.sim-mode-toggle{display:flex;gap:8px;margin-bottom:16px;}
+.sim-panel{padding:22px 24px;margin-bottom:18px;}
+.sim-history-summary{margin-bottom:16px;}
+.sim-summary-line{font-size:13.5px;color:var(--parchment-dim);padding:10px 14px;background:rgba(201,162,39,0.06);border:1px solid var(--hairline-gold);border-radius:10px;}
+.sim-summary-line strong{color:var(--gold-bright);}
+.sim-inputs{margin-bottom:18px;}
+.sim-results{margin-top:6px;}
+
+/* responsive */
+@media (max-width:900px){
+  .analytics-row{grid-template-columns:1fr;}
+  .breakdown-grid{grid-template-columns:1fr;}
+  .header-right{width:100%;justify-content:space-between;}
+  .header-stats{gap:14px;}
 }
-
-*,*::before,*::after{box-sizing:border-box;}
-html{-webkit-text-size-adjust:100%;}
-body{
-  margin:0;
-  font-family:var(--font-sans);
-  color:var(--text-0);
-  background:var(--navy-900);
-  min-height:100vh;
-  -webkit-font-smoothing:antialiased;
+@media (max-width:640px){
+  .app-shell{padding:14px 12px 48px;}
+  .app-header{padding:16px;}
+  .brand h1{font-size:19px;}
+  .breakdown-row{grid-template-columns:1fr 1fr;row-gap:6px;}
+  .breakdown-winrate,.breakdown-pnl-bar{grid-column:span 1;}
+  .detail-emotions{grid-template-columns:1fr;}
 }
-@media (prefers-reduced-motion: reduce){
-  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
-}
-
-/* ---------- background atmosphere ---------- */
-.bg-layer{position:fixed;inset:0;z-index:-2;background:
-  radial-gradient(1100px 700px at 82% -8%, rgba(212,168,67,.16), transparent 60%),
-  radial-gradient(900px 600px at -10% 15%, rgba(90,169,230,.08), transparent 55%),
-  radial-gradient(1200px 900px at 50% 120%, rgba(62,207,142,.06), transparent 60%),
-  linear-gradient(180deg, var(--navy-950) 0%, var(--navy-900) 40%, var(--navy-850) 100%);
-}
-.bg-grid{position:fixed;inset:0;z-index:-1;opacity:.35;
-  background-image:
-    linear-gradient(rgba(212,168,67,.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(212,168,67,.05) 1px, transparent 1px);
-  background-size:44px 44px;
-  mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 85%);
-  -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 85%);
-}
-
-/* ---------- layout shell ---------- */
-.shell{max-width:1360px;margin:0 auto;padding:22px 22px 80px;}
-.topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
-.brand{display:flex;align-items:center;gap:12px;}
-.brand-mark{width:42px;height:42px;border-radius:11px;background:linear-gradient(145deg,var(--gold-bright),var(--gold) 60%,#9c7527);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(212,168,67,.28);flex-shrink:0;}
-.brand-mark svg{width:22px;height:22px;}
-.brand-text h1{margin:0;font-size:19px;font-weight:800;letter-spacing:.2px;}
-.brand-text p{margin:1px 0 0;font-size:12px;color:var(--text-2);font-family:var(--font-mono);letter-spacing:.3px;}
-.topbar-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-
-.save-indicator{display:flex;align-items:center;gap:7px;font-size:12px;font-family:var(--font-mono);color:var(--text-2);background:var(--glass);border:1px solid var(--line);padding:7px 12px;border-radius:999px;}
-.save-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px var(--green-dim);flex-shrink:0;transition:background .2s,box-shadow .2s;}
-.save-dot.saving{background:var(--gold);box-shadow:0 0 0 3px var(--gold-dim);animation:pulse 1s infinite;}
-.save-dot.error{background:var(--red);box-shadow:0 0 0 3px var(--red-dim);}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
-
-.btn{
-  appearance:none;border:1px solid var(--line);background:var(--glass);color:var(--text-1);
-  font-family:var(--font-sans);font-size:13px;font-weight:600;padding:9px 15px;border-radius:10px;
-  cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:.15s ease;white-space:nowrap;
-}
-.btn svg{width:15px;height:15px;flex-shrink:0;}
-.btn:hover{background:var(--glass-strong);border-color:var(--gold-line);color:var(--text-0);transform:translateY(-1px);}
-.btn:active{transform:translateY(0);}
-.btn-gold{background:linear-gradient(145deg,var(--gold-bright),var(--gold));border-color:transparent;color:#26190a;box-shadow:0 6px 16px rgba(212,168,67,.25);}
-.btn-gold:hover{filter:brightness(1.08);color:#26190a;}
-.btn-danger{border-color:rgba(240,101,93,.35);color:var(--red);}
-.btn-danger:hover{background:var(--red-dim);border-color:var(--red);color:var(--red);}
-.btn-ghost{background:transparent;border-color:transparent;color:var(--text-2);}
-.btn-ghost:hover{background:var(--glass);color:var(--text-0);}
-.btn-sm{padding:6px 11px;font-size:12px;border-radius:8px;}
-.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
-
-/* ---------- tabs ---------- */
-.tabbar{
-  display:flex;gap:4px;background:var(--glass);border:1px solid var(--glass-border);
-  border-radius:14px;padding:5px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-  margin-bottom:22px;overflow-x:auto;box-shadow:var(--shadow-card);
-}
-.tab-btn{
-  flex:1 1 0;appearance:none;border:none;background:transparent;color:var(--text-2);
-  font-family:var(--font-sans);font-size:13px;font-weight:600;padding:11px 14px;border-radius:10px;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;
-  transition:.18s ease;position:relative;
-}
-.tab-btn svg{width:16px;height:16px;opacity:.8;flex-shrink:0;}
-.tab-btn:hover{color:var(--text-0);background:rgba(255,255,255,.04);}
-.tab-btn.active{color:#26190a;background:linear-gradient(145deg,var(--gold-bright),var(--gold));box-shadow:0 4px 14px rgba(212,168,67,.3);}
-.tab-btn.active svg{opacity:1;}
-.tab-btn:focus-visible,.btn:focus-visible,.pill:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.star:focus-visible{
-  outline:2px solid var(--gold-bright);outline-offset:2px;
-}
-
-.tab-panel{display:none;animation:fadein .25s ease;}
-.tab-panel.active{display:block;}
-@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
-
-/* ---------- glass card ---------- */
-.card{
-  background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius-lg);
-  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:var(--shadow-card);
-  padding:22px;margin-bottom:18px;
-}
-.card-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap;}
-.card-title{font-size:15px;font-weight:700;margin:0;display:flex;align-items:center;gap:9px;}
-.card-title svg{width:17px;height:17px;color:var(--gold);flex-shrink:0;}
-.card-sub{font-size:12px;color:var(--text-2);margin:2px 0 0;}
-.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.1px;color:var(--gold);margin:0 0 12px;display:flex;align-items:center;gap:8px;}
-.section-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--gold-line),transparent);}
-.form-section{margin-bottom:26px;}
-.form-section:last-child{margin-bottom:0;}
-
-/* ---------- form grid & fields ---------- */
-.field-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;}
-.field{display:flex;flex-direction:column;gap:6px;}
-.field label{font-size:11.5px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:.5px;}
-.field .hint{font-size:11px;color:var(--text-3);font-weight:400;text-transform:none;letter-spacing:0;margin-top:1px;}
-input[type=text],input[type=number],input[type=date],select,textarea{
-  width:100%;background:var(--navy-850);border:1px solid var(--line);color:var(--text-0);
-  font-family:var(--font-mono);font-size:13.5px;padding:10px 12px;border-radius:9px;
-  transition:.15s;
-}
-input[type=text]:focus,input[type=number]:focus,input[type=date]:focus,select:focus,textarea:focus{
-  border-color:var(--gold);background:var(--navy-800);
-}
-textarea{font-family:var(--font-sans);resize:vertical;min-height:64px;line-height:1.5;}
-input::placeholder,textarea::placeholder{color:var(--text-3);}
-input:read-only{opacity:.75;}
-input[type=date]{color-scheme:dark;}
-
-.pill-group{display:flex;flex-wrap:wrap;gap:8px;}
-.pill{
-  appearance:none;border:1px solid var(--line);background:var(--navy-850);color:var(--text-1);
-  font-family:var(--font-sans);font-size:12.5px;font-weight:600;padding:8px 14px;border-radius:999px;
-  cursor:pointer;transition:.15s;
-}
-.pill:hover{border-color:var(--gold-line);color:var(--text-0);}
-.pill.active{background:linear-gradient(145deg,var(--gold-bright),var(--gold));border-color:transparent;color:#26190a;box-shadow:0 3px 10px rgba(212,168,67,.25);}
-/* semantic pill coloring for outcome-style groups */
-.pill.active[data-tone="green"]{background:linear-gradient(145deg,#5ee0a4,var(--green));color:#04241a;}
-.pill.active[data-tone="red"]{background:linear-gradient(145deg,#f7897f,var(--red));color:#2b0906;}
-.pill.active[data-tone="amber"]{background:linear-gradient(145deg,#f3c463,#d99a2b);color:#2b1a02;}
-.pill.active[data-tone="blue"]{background:linear-gradient(145deg,#84c1ef,var(--blue));color:#08202f;}
-
-.star-rating{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-.star-row{display:flex;gap:3px;}
-.star{font-size:19px;line-height:1;cursor:pointer;color:var(--navy-700);transition:.1s;user-select:none;background:none;border:none;padding:2px;}
-.star.filled{color:var(--gold);text-shadow:0 0 10px rgba(212,168,67,.5);}
-.star-value{font-family:var(--font-mono);font-size:12.5px;color:var(--text-2);min-width:38px;}
-
-.checkbox-row{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-2);cursor:pointer;}
-.checkbox-row input{width:15px;height:15px;accent-color:var(--gold);cursor:pointer;}
-
-.divider{height:1px;background:var(--line);margin:18px 0;}
-
-.live-preview{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:14px;padding:14px;background:rgba(0,0,0,.18);border:1px dashed var(--line);border-radius:12px;}
-.live-preview .lp-item{display:flex;flex-direction:column;gap:3px;}
-.live-preview .lp-label{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-3);}
-.live-preview .lp-value{font-family:var(--font-mono);font-size:15px;font-weight:700;color:var(--text-0);}
-.live-preview .lp-value.pos{color:var(--green);}
-.live-preview .lp-value.neg{color:var(--red);}
-
-details.adv{margin-top:12px;}
-details.adv summary{cursor:pointer;font-size:12px;color:var(--text-2);font-weight:600;list-style:none;display:flex;align-items:center;gap:6px;}
-details.adv summary::-webkit-details-marker{display:none;}
-details.adv summary::before{content:'▸';transition:.15s;color:var(--gold);}
-details.adv[open] summary::before{transform:rotate(90deg);}
-details.adv .adv-body{padding-top:12px;}
-
-.form-actions{display:flex;align-items:center;gap:10px;justify-content:flex-end;margin-top:22px;flex-wrap:wrap;}
-.edit-banner{display:none;align-items:center;justify-content:space-between;gap:10px;background:var(--gold-dim);border:1px solid var(--gold-line);color:var(--gold-bright);padding:10px 14px;border-radius:10px;font-size:12.5px;margin-bottom:18px;flex-wrap:wrap;}
-.edit-banner.show{display:flex;}
-
-/* ---------- badges ---------- */
-.badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;font-family:var(--font-mono);white-space:nowrap;}
-.badge-buy{background:var(--green-dim);color:var(--green);}
-.badge-sell{background:var(--red-dim);color:var(--red);}
-.badge-be{background:rgba(90,169,230,.14);color:var(--blue);}
-.badge-open{background:var(--gold-dim);color:var(--gold-bright);}
-.badge-neutral{background:rgba(255,255,255,.06);color:var(--text-2);}
-.tag-chip{display:inline-flex;font-size:10.5px;font-family:var(--font-sans);font-weight:600;color:var(--text-1);background:rgba(255,255,255,.05);border:1px solid var(--line);padding:2px 8px;border-radius:999px;white-space:nowrap;}
-
-/* ---------- table ---------- */
-.table-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:flex-end;}
-.table-toolbar .field{min-width:140px;flex:1;}
-.table-scroll{overflow-x:auto;border-radius:12px;border:1px solid var(--line);}
-table{width:100%;border-collapse:collapse;min-width:960px;}
-thead th{
-  text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-2);
-  padding:11px 14px;background:rgba(255,255,255,.03);border-bottom:1px solid var(--line);cursor:pointer;
-  white-space:nowrap;user-select:none;position:sticky;top:0;
-}
-thead th:hover{color:var(--gold-bright);}
-thead th .sort-ind{opacity:.5;margin-left:3px;}
-tbody td{padding:11px 14px;font-size:12.5px;border-bottom:1px solid var(--line);color:var(--text-1);white-space:nowrap;font-family:var(--font-mono);}
-tbody tr{cursor:pointer;transition:background .12s;}
-tbody tr:hover{background:rgba(212,168,67,.05);}
-tbody tr:last-child td{border-bottom:none;}
-.cell-pnl.pos{color:var(--green);font-weight:700;}
-.cell-pnl.neg{color:var(--red);font-weight:700;}
-.row-actions{display:flex;gap:6px;}
-.icon-btn{width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;border:1px solid var(--line);background:var(--navy-850);color:var(--text-2);cursor:pointer;transition:.15s;}
-.icon-btn:hover{color:var(--gold-bright);border-color:var(--gold-line);}
-.icon-btn.danger:hover{color:var(--red);border-color:rgba(240,101,93,.4);}
-.icon-btn svg{width:14px;height:14px;}
-.empty-state{text-align:center;padding:50px 20px;color:var(--text-2);}
-.empty-state svg{width:38px;height:38px;color:var(--text-3);margin-bottom:12px;}
-.empty-state p{margin:4px 0;font-size:13px;}
-.empty-state .lead{font-size:15px;font-weight:700;color:var(--text-1);}
-.pagination{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:16px;font-size:12px;color:var(--text-2);font-family:var(--font-mono);}
-
-/* ---------- stat cards ---------- */
-.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px;}
-.stat-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius-md);padding:15px 16px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);}
-.stat-card .st-label{font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-2);display:flex;align-items:center;gap:6px;}
-.stat-card .st-value{font-family:var(--font-mono);font-size:22px;font-weight:700;margin-top:6px;color:var(--text-0);}
-.stat-card .st-value.pos{color:var(--green);}
-.stat-card .st-value.neg{color:var(--red);}
-.stat-card .st-foot{font-size:11px;color:var(--text-3);margin-top:3px;font-family:var(--font-mono);}
-
-/* ---------- calendar ---------- */
-.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
-.cal-nav .cal-title{font-size:16px;font-weight:700;font-family:var(--font-mono);letter-spacing:.5px;}
-.cal-nav-btns{display:flex;gap:8px;}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;}
-.cal-dow{text-align:center;font-size:10.5px;text-transform:uppercase;letter-spacing:.7px;color:var(--text-3);padding-bottom:6px;font-weight:700;}
-.cal-cell{aspect-ratio:1/0.82;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.02);padding:8px;display:flex;flex-direction:column;justify-content:space-between;cursor:default;transition:.15s;}
-.cal-cell.blank{border:none;background:none;}
-.cal-cell.has-trades{cursor:pointer;}
-.cal-cell.has-trades:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.3);}
-.cal-cell.today{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset;}
-.cal-cell.pos{background:var(--green-dim);border-color:rgba(62,207,142,.3);}
-.cal-cell.neg{background:var(--red-dim);border-color:rgba(240,101,93,.3);}
-.cal-daynum{font-size:12px;color:var(--text-2);font-family:var(--font-mono);}
-.cal-cell.pos .cal-daynum,.cal-cell.neg .cal-daynum{color:var(--text-0);}
-.cal-pnl{font-family:var(--font-mono);font-size:11.5px;font-weight:700;}
-.cal-cell.pos .cal-pnl{color:var(--green);}
-.cal-cell.neg .cal-pnl{color:var(--red);}
-.cal-count{font-size:9.5px;color:var(--text-3);font-family:var(--font-mono);}
-
-/* ---------- charts ---------- */
-.chart-box{width:100%;}
-.chart-box svg{width:100%;height:auto;display:block;overflow:visible;}
-.chart-grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;}
-.bar-label-row{display:flex;justify-content:space-between;font-size:11px;color:var(--text-2);margin-top:4px;}
-.axis-text{font-family:var(--font-mono);font-size:10px;fill:var(--text-3);}
-.insight-list{display:flex;flex-direction:column;gap:10px;}
-.insight-item{display:flex;gap:11px;align-items:flex-start;padding:12px 14px;background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:11px;font-size:12.5px;line-height:1.55;color:var(--text-1);}
-.insight-item svg{width:16px;height:16px;flex-shrink:0;margin-top:1px;}
-.insight-item.good svg{color:var(--green);}
-.insight-item.bad svg{color:var(--red);}
-.insight-item.neutral svg{color:var(--gold);}
-.insight-item b{color:var(--text-0);}
-
-/* ---------- simulation ---------- */
-.sim-mode-toggle{display:flex;gap:4px;background:var(--navy-850);border:1px solid var(--line);border-radius:11px;padding:4px;width:fit-content;margin-bottom:20px;}
-.sim-mode-btn{border:none;background:transparent;color:var(--text-2);font-family:var(--font-sans);font-weight:600;font-size:12.5px;padding:9px 16px;border-radius:8px;cursor:pointer;transition:.15s;}
-.sim-mode-btn.active{background:linear-gradient(145deg,var(--gold-bright),var(--gold));color:#26190a;}
-.sim-panel{display:none;}
-.sim-panel.active{display:block;}
-.fan-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--text-2);margin-top:10px;}
-.fan-legend .lg-item{display:flex;align-items:center;gap:6px;}
-.fan-legend .lg-swatch{width:12px;height:12px;border-radius:3px;}
-
-/* ---------- modal ---------- */
-.modal-overlay{position:fixed;inset:0;background:rgba(4,8,14,.72);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:100;padding:20px;}
-.modal-overlay.show{display:flex;}
-.modal-box{background:var(--navy-850);border:1px solid var(--glass-border);border-radius:var(--radius-lg);max-width:640px;width:100%;max-height:86vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.5);}
-.modal-box.sm{max-width:400px;}
-.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--navy-850);z-index:2;}
-.modal-head h3{margin:0;font-size:15px;font-weight:700;}
-.modal-close{background:none;border:none;color:var(--text-2);cursor:pointer;width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
-.modal-close:hover{background:var(--glass);color:var(--text-0);}
-.modal-body{padding:20px 22px;}
-.modal-foot{display:flex;gap:10px;justify-content:flex-end;padding:16px 22px;border-top:1px solid var(--line);}
-.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;margin-bottom:16px;}
-.detail-grid .dg-item{display:flex;flex-direction:column;gap:2px;}
-.detail-grid .dg-label{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-3);}
-.detail-grid .dg-value{font-family:var(--font-mono);font-size:13px;color:var(--text-0);}
-.detail-text-block{margin-bottom:14px;}
-.detail-text-block .dg-label{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-3);margin-bottom:4px;display:block;}
-.detail-text-block p{margin:0;font-size:12.5px;color:var(--text-1);line-height:1.6;white-space:pre-wrap;}
-.day-trade-row{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:1px solid var(--line);border-radius:9px;margin-bottom:8px;cursor:pointer;font-size:12.5px;}
-.day-trade-row:hover{border-color:var(--gold-line);background:var(--glass);}
-
-/* ---------- toast ---------- */
-.toast-container{position:fixed;bottom:22px;right:22px;z-index:200;display:flex;flex-direction:column;gap:10px;}
-.toast{background:var(--navy-800);border:1px solid var(--glass-border);color:var(--text-0);padding:12px 16px;border-radius:11px;font-size:12.5px;display:flex;align-items:center;gap:9px;box-shadow:0 10px 30px rgba(0,0,0,.4);animation:toastin .25s ease;min-width:200px;}
-.toast svg{width:16px;height:16px;flex-shrink:0;}
-.toast.success svg{color:var(--green);}
-.toast.error svg{color:var(--red);}
-.toast.info svg{color:var(--gold);}
-@keyframes toastin{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-
-.storage-banner{display:none;align-items:center;gap:10px;background:rgba(240,101,93,.1);border:1px solid rgba(240,101,93,.3);color:#ffb3ae;padding:10px 14px;border-radius:11px;font-size:12px;margin-bottom:18px;}
-.storage-banner.show{display:flex;}
-.storage-banner svg{width:16px;height:16px;flex-shrink:0;}
-
-.hidden{display:none !important;}
-::-webkit-scrollbar{width:9px;height:9px;}
-::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:var(--navy-700);border-radius:6px;}
-::-webkit-scrollbar-thumb:hover{background:var(--gold-line);}
-
-@media (max-width:720px){
-  .shell{padding:14px 12px 60px;}
-  .tab-btn span{display:none;}
-  .detail-grid{grid-template-columns:1fr;}
-  .cal-grid{gap:4px;}
-  .cal-cell{padding:5px;border-radius:7px;}
-  .cal-pnl{font-size:9.5px;}
+@media (prefers-reduced-motion:reduce){
+  #backdrop-svg{animation:none;}
+  .tab-panel{animation:none;}
 }
 </style>
 </head>
 <body>
+<div id="backdrop-wrap">
+  <svg id="backdrop-svg" preserveAspectRatio="none"></svg>
+</div>
+<div id="toast-container"></div>
+<div id="modal-root"></div>
 
-<div class="bg-layer"></div>
-<div class="bg-grid"></div>
+<div class="app-shell">
 
-<div class="shell">
-
-  <!-- ===================== HEADER ===================== -->
-  <div class="topbar">
+  <header class="app-header glass">
     <div class="brand">
-      <div class="brand-mark">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M3 17L9 11L13 15L21 6" stroke="#26190a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 6H21V12" stroke="#26190a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <div class="brand-text">
+      <span class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+          <path d="M5 3v3.2"/><rect x="3" y="6.2" width="4" height="7.6" rx="1"/><path d="M5 13.8V21"/>
+          <path d="M12 2v2.4"/><rect x="10" y="4.4" width="4" height="11" rx="1"/><path d="M12 15.4V22"/>
+          <path d="M19 5v2.6"/><rect x="17" y="7.6" width="4" height="6.4" rx="1"/><path d="M19 14V19"/>
+        </svg>
+      </span>
+      <div>
         <h1>Trade Journal</h1>
-        <p>DISCIPLINE &middot; DATA &middot; EDGE</p>
+        <p class="brand-sub">XAU/USD &amp; Multi-Asset Ledger</p>
       </div>
     </div>
-    <div class="topbar-actions">
-      <div class="save-indicator"><span class="save-dot" id="saveDot"></span><span id="saveText">All changes saved</span></div>
-      <button class="btn" id="btnExport" type="button">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3V15M12 15L7 10M12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 17V19C4 20.1046 4.89543 21 6 21H18C19.1046 21 20 20.1046 20 19V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        Export
-      </button>
-      <button class="btn" id="btnImport" type="button">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 15V3M12 3L7 8M12 3L17 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 17V19C4 20.1046 4.89543 21 6 21H18C19.1046 21 20 20.1046 20 19V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        Import
-      </button>
-      <input type="file" id="importFile" accept="application/json" class="hidden">
-    </div>
-  </div>
-
-  <div class="storage-banner" id="storageBanner">
-    <svg viewBox="0 0 24 24" fill="none"><path d="M12 9V13M12 17H12.01M10.29 3.86L1.82 18A2 2 0 003.54 21H20.46A2 2 0 0022.18 18L13.71 3.86A2 2 0 0010.29 3.86Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <span>Persistent storage isn't available in this view, so entries will only last for this session. Use <b>Export</b> often to keep a backup, and <b>Import</b> to restore it.</span>
-  </div>
-
-  <!-- ===================== TABS ===================== -->
-  <div class="tabbar" role="tablist">
-    <button class="tab-btn active" data-tab="entry" type="button">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
-      <span>Trade Entry</span>
-    </button>
-    <button class="tab-btn" data-tab="history" type="button">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M8 6H21M8 12H21M8 18H21M3 6H3.01M3 12H3.01M3 18H3.01" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span>History</span>
-    </button>
-    <button class="tab-btn" data-tab="calendar" type="button">
-      <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="2.2"/><path d="M3 10H21M8 3V6M16 3V6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
-      <span>Calendar</span>
-    </button>
-    <button class="tab-btn" data-tab="analytics" type="button">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M4 20V10M11 20V4M18 20V14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span>Analytics</span>
-    </button>
-    <button class="tab-btn" data-tab="simulation" type="button">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M3 17C5 17 5 8 8 8C11 8 11 20 14 20C17 20 17 6 21 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span>Simulation</span>
-    </button>
-  </div>
-
-  <!-- ===================== PANEL: TRADE ENTRY ===================== -->
-  <div class="tab-panel active" id="panel-entry">
-    <div class="card">
-      <div class="edit-banner" id="editBanner">
-        <span id="editBannerText">Editing a trade</span>
-        <button class="btn btn-sm btn-ghost" id="btnCancelEdit" type="button">Cancel edit</button>
+    <div class="header-right">
+      <div class="header-stats" id="header-stats"></div>
+      <div class="header-actions">
+        <button class="icon-btn" id="export-btn" title="Export data as JSON">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 21h16"/></svg>
+        </button>
+        <button class="icon-btn" id="import-btn" title="Import data from JSON">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9"/><path d="M7 14l5-5 5 5"/><path d="M4 3h16"/></svg>
+        </button>
+        <input type="file" id="import-file" accept="application/json" style="display:none">
       </div>
+    </div>
+  </header>
 
-      <form id="tradeForm" novalidate>
+  <div class="storage-banner" id="storage-banner">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.86 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L14.7 3.86a2 2 0 0 0-3.4 0Z"/></svg>
+    <span>Auto-save isn't available in this session (opened outside Claude.ai). Your entries will only last until you close this tab — use <strong>Export</strong> to back them up, and <strong>Import</strong> to bring them back next time.</span>
+    <button class="icon-btn" id="dismiss-banner" title="Dismiss">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="M6 6l12 12"/></svg>
+    </button>
+  </div>
 
-        <div class="form-section">
-          <p class="section-label">Trade Details</p>
-          <div class="field-grid">
+  <nav class="tabs glass">
+    <button class="tab-btn active" data-tab="entry">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+      Trade Entry
+    </button>
+    <button class="tab-btn" data-tab="history">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8 13 13.7l-4-4L3.7 16"/></svg>
+      History
+    </button>
+    <button class="tab-btn" data-tab="calendar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M16 2.5v4"/><path d="M8 2.5v4"/><path d="M3 10h18"/></svg>
+      Calendar
+    </button>
+    <button class="tab-btn" data-tab="analytics">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12.5" y="8" width="3" height="10"/><rect x="18" y="5" width="3" height="13"/></svg>
+      Analytics
+    </button>
+    <button class="tab-btn" data-tab="simulation">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="8.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="8.5" cy="15.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.2" fill="currentColor" stroke="none"/></svg>
+      Simulator
+    </button>
+  </nav>
+
+  <main class="tab-panels">
+    <section id="tab-entry" class="tab-panel active">
+      <div class="section-header">
+        <h2 id="form-title">New Trade Entry</h2>
+      </div>
+      <form id="trade-form" novalidate>
+
+        <div class="form-section glass">
+          <h3 class="form-section-title"><span class="fs-num">1</span> Trade Details</h3>
+          <p class="form-section-sub">The basics — what you traded and where you got in and out.</p>
+          <div class="form-grid">
             <div class="field">
-              <label for="f-instrument">Instrument</label>
-              <input type="text" id="f-instrument" list="instrument-list" placeholder="XAUUSD" autocomplete="off" required>
+              <label for="instrument">Instrument<span class="req">*</span></label>
+              <input type="text" id="instrument" list="instrument-list" placeholder="XAU/USD" required autocomplete="off">
               <datalist id="instrument-list">
-                <option value="XAUUSD"><option value="XAGUSD"><option value="BTCUSD"><option value="EURUSD"><option value="GBPUSD"><option value="USDJPY"><option value="US30"><option value="NAS100">
+                <option value="XAU/USD"><option value="XAUUSD"><option value="BTC/USD">
+                <option value="EUR/USD"><option value="GBP/USD"><option value="GBP/JPY">
+                <option value="US30"><option value="NAS100"><option value="USOIL">
               </datalist>
             </div>
             <div class="field">
-              <label for="f-date">Trade Date</label>
-              <input type="date" id="f-date" required>
+              <label for="trade-date">Trade Date<span class="req">*</span></label>
+              <input type="date" id="trade-date" required>
             </div>
             <div class="field">
-              <label for="f-lots">Lot Size</label>
-              <input type="number" id="f-lots" step="0.01" min="0.01" placeholder="0.10" required>
+              <label for="lot-size">Lot Size<span class="req">*</span></label>
+              <input type="number" id="lot-size" step="0.01" min="0.01" placeholder="1.00" required>
             </div>
             <div class="field">
-              <label for="f-entry">Entry Point</label>
-              <input type="number" id="f-entry" step="any" placeholder="3320.50" required>
+              <label for="entry-price">Entry Price<span class="req">*</span></label>
+              <input type="number" id="entry-price" step="any" placeholder="2350.00" required>
             </div>
             <div class="field">
-              <label for="f-exit">Exit Point <span class="hint">(leave blank if still open)</span></label>
-              <input type="number" id="f-exit" step="any" placeholder="3326.10">
+              <label for="exit-price">Exit Price<span class="req">*</span></label>
+              <input type="number" id="exit-price" step="any" placeholder="2362.50" required>
             </div>
           </div>
-          <div class="divider"></div>
-          <div class="field-grid">
-            <div class="field" style="grid-column:span 2;">
-              <label>Trade Type</label>
-              <div class="pill-group" data-field="type" data-multi="false">
-                <button type="button" class="pill" data-value="Buy" data-tone="green">Buy</button>
-                <button type="button" class="pill" data-value="Sell" data-tone="red">Sell</button>
-                <button type="button" class="pill" data-value="Break Even" data-tone="blue">Break Even</button>
-              </div>
-            </div>
-            <div class="field" style="grid-column:span 2;">
-              <label>Status</label>
-              <div class="pill-group" data-field="status" data-multi="false">
-                <button type="button" class="pill" data-value="Closed">Closed</button>
-                <button type="button" class="pill" data-value="Open" data-tone="amber">Open</button>
-              </div>
+          <div class="field" style="margin-top:16px;">
+            <label>Trade Type<span class="req">*</span></label>
+            <div class="chip-group">
+              <div class="chip selected" data-chip-group="tradeType" data-value="Buy">Buy</div>
+              <div class="chip" data-chip-group="tradeType" data-value="Sell">Sell</div>
+              <div class="chip" data-chip-group="tradeType" data-value="Break Even">Break Even</div>
             </div>
           </div>
         </div>
 
-        <div class="form-section">
-          <p class="section-label">Strategy &amp; Setup</p>
-          <div class="field" style="margin-bottom:14px;">
-            <label>Strategy <span class="hint">(select all that apply)</span></label>
-            <div class="pill-group" data-field="strategies" data-multi="true" id="strategyPills">
-              <button type="button" class="pill" data-value="Fib 0, 0.5 &amp; 1">Fib 0, 0.5 &amp; 1</button>
-              <button type="button" class="pill" data-value="Order Block">Order Block</button>
-              <button type="button" class="pill" data-value="Advanced Order Block">Advanced Order Block</button>
-              <button type="button" class="pill" data-value="Candle Rejection">Candle Rejection</button>
-              <button type="button" class="pill" data-value="Support &amp; Resistance">Support &amp; Resistance</button>
-              <button type="button" class="pill" data-value="Equal High Liquidity">Equal High Liquidity</button>
-              <button type="button" class="pill" data-value="High Liquidity">High Liquidity</button>
-              <button type="button" class="pill" data-value="Market Structure">Market Structure</button>
+        <div class="form-section glass">
+          <h3 class="form-section-title"><span class="fs-num">2</span> Strategy &amp; Setup</h3>
+          <p class="form-section-sub">Every confluence that put this trade on your radar — select as many as apply.</p>
+          <div class="strategy-grid" id="strategy-grid">
+            <div class="strategy-card" data-chip-group="strategies" data-value="Fibonacci (0/0.5/1)"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Fibonacci (0 / 0.5 / 1)</span></div>
+            <div class="strategy-card" data-chip-group="strategies" data-value="Order Block"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Order Block</span></div>
+            <div class="strategy-card" data-chip-group="strategies" data-value="Advanced Order Block"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Advanced Order Block</span></div>
+            <div class="strategy-card" data-chip-group="strategies" data-value="Candle Rejection"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Candle Rejection</span></div>
+            <div class="strategy-card" data-chip-group="strategies" data-value="Support &amp; Resistance"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Support &amp; Resistance</span></div>
+            <div class="strategy-card" data-chip-group="strategies" data-value="Equal High Liquidity"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Equal High Liquidity</span></div>
+            <div class="strategy-card" data-chip-group="strategies" data-value="High Liquidity"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">High Liquidity</span></div>
+            <div class="strategy-card" data-chip-group="strategies" data-value="Market Structure"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Market Structure</span></div>
+            <div class="strategy-card" data-chip-group="strategies" data-value="Other"><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span class="label">Other</span></div>
+          </div>
+          <div class="other-strategy-wrap" id="other-strategy-wrap">
+            <div class="field">
+              <label for="other-strategy-text">Describe your strategy</label>
+              <input type="text" id="other-strategy-text" placeholder="e.g. Session open range breakout">
             </div>
           </div>
-          <div class="field" style="margin-bottom:14px;">
-            <label for="f-other-strategy">Other Strategy <span class="hint">(not listed above)</span></label>
-            <input type="text" id="f-other-strategy" placeholder="e.g. News-based breakout">
-          </div>
-          <div class="field-grid">
-            <div class="field" style="grid-column:span 2;">
+
+          <div class="form-grid" style="margin-top:20px;">
+            <div class="field field-wide">
               <label>Setup Quality</label>
-              <div class="pill-group" data-field="setupQuality" data-multi="false">
-                <button type="button" class="pill" data-value="Excellent" data-tone="green">Excellent</button>
-                <button type="button" class="pill" data-value="Good" data-tone="blue">Good</button>
-                <button type="button" class="pill" data-value="Average" data-tone="amber">Average</button>
-                <button type="button" class="pill" data-value="Poor" data-tone="red">Poor</button>
+              <div class="chip-group">
+                <div class="chip" data-chip-group="setupQuality" data-value="Excellent">Excellent</div>
+                <div class="chip selected" data-chip-group="setupQuality" data-value="Good">Good</div>
+                <div class="chip" data-chip-group="setupQuality" data-value="Average">Average</div>
+                <div class="chip" data-chip-group="setupQuality" data-value="Poor">Poor</div>
               </div>
             </div>
-            <div class="field" style="grid-column:span 2;">
+            <div class="field field-wide">
               <label>Trading Type</label>
-              <div class="pill-group" data-field="tradingType" data-multi="false">
-                <button type="button" class="pill" data-value="Intraday">Intraday</button>
-                <button type="button" class="pill" data-value="Swing Trade (2-5 Days)">Swing Trade (2-5 Days)</button>
-                <button type="button" class="pill" data-value="Scalping">Scalping</button>
+              <div class="chip-group">
+                <div class="chip selected" data-chip-group="tradingType" data-value="Intraday">Intraday</div>
+                <div class="chip" data-chip-group="tradingType" data-value="Swing Trade">Swing Trade (2–5 days)</div>
+                <div class="chip" data-chip-group="tradingType" data-value="Scalping">Scalping</div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="form-section">
-          <p class="section-label">Risk Management</p>
-          <div class="field-grid">
+        <div class="form-section glass">
+          <h3 class="form-section-title"><span class="fs-num">3</span> Risk Management</h3>
+          <p class="form-section-sub">What you risked, what you targeted, and what it actually paid out.</p>
+          <div class="form-grid">
             <div class="field">
-              <label for="f-sl">Stop Loss</label>
-              <input type="number" id="f-sl" step="any" placeholder="3317.20">
+              <label for="stop-loss">Stop Loss<span class="req">*</span></label>
+              <input type="number" id="stop-loss" step="any" placeholder="2344.00" required>
             </div>
             <div class="field">
-              <label for="f-target">Target</label>
-              <input type="number" id="f-target" step="any" placeholder="3330.10">
+              <label for="target-price">Target<span class="req">*</span></label>
+              <input type="number" id="target-price" step="any" placeholder="2368.00" required>
+            </div>
+            <div class="field">
+              <label for="pnl">Profit / Loss ($)<span class="req">*</span></label>
+              <input type="number" id="pnl" step="any" placeholder="e.g. 150 or -75" required>
+              <span class="field-hint">Actual realized P/L from your broker</span>
             </div>
           </div>
-          <details class="adv">
-            <summary>Advanced: pip size &amp; contract value</summary>
-            <div class="adv-body">
-              <div class="field-grid">
-                <div class="field">
-                  <label for="f-pipsize">Pip Size <span class="hint">(price move = 1 pip)</span></label>
-                  <input type="number" id="f-pipsize" step="any" value="0.10">
-                </div>
-                <div class="field">
-                  <label for="f-dollarpip">$ per Pip per Lot</label>
-                  <input type="number" id="f-dollarpip" step="any" value="10">
-                </div>
-              </div>
-              <p class="hint" style="margin-top:8px;">Defaults match the XAUUSD standard contract ($10/pip/lot). Adjust for other instruments.</p>
-            </div>
-          </details>
-          <div class="live-preview" id="livePreview">
-            <div class="lp-item"><span class="lp-label">Risk (pips)</span><span class="lp-value" id="lp-riskpips">—</span></div>
-            <div class="lp-item"><span class="lp-label">Reward (pips)</span><span class="lp-value" id="lp-rewardpips">—</span></div>
-            <div class="lp-item"><span class="lp-label">Risk:Reward</span><span class="lp-value" id="lp-rr">—</span></div>
-            <div class="lp-item"><span class="lp-label">$ at Risk</span><span class="lp-value" id="lp-dollarrisk">—</span></div>
-            <div class="lp-item"><span class="lp-label">P&amp;L ($)</span><span class="lp-value" id="lp-pnl">—</span></div>
-          </div>
-          <label class="checkbox-row" style="margin-top:12px;">
-            <input type="checkbox" id="f-pnl-override-toggle">
-            Manually override calculated P&amp;L
-          </label>
-          <div class="field" style="max-width:220px;margin-top:10px;" id="pnlOverrideWrap">
-            <label for="f-pnl-override">P&amp;L Override ($)</label>
-            <input type="number" id="f-pnl-override" step="any" placeholder="0.00" disabled>
+          <div class="live-preview">
+            <div class="preview-item"><span>Risk : Reward</span><strong id="rr-preview">—</strong></div>
+            <div class="preview-item"><span>Result</span><span id="result-preview" class="result-badge">—</span></div>
           </div>
         </div>
 
-        <div class="form-section">
-          <p class="section-label">Market Condition</p>
-          <div class="pill-group" data-field="marketCondition" data-multi="false">
-            <button type="button" class="pill" data-value="Bullish" data-tone="green">Bullish</button>
-            <button type="button" class="pill" data-value="Bearish" data-tone="red">Bearish</button>
-            <button type="button" class="pill" data-value="Neutral" data-tone="blue">Neutral</button>
-            <button type="button" class="pill" data-value="Volatile" data-tone="amber">Volatile</button>
+        <div class="form-section glass">
+          <h3 class="form-section-title"><span class="fs-num">4</span> Market Condition</h3>
+          <p class="form-section-sub">The broader tape while you were in this trade.</p>
+          <div class="chip-group">
+            <div class="chip" data-chip-group="marketCondition" data-value="Bullish">Bullish</div>
+            <div class="chip" data-chip-group="marketCondition" data-value="Bearish">Bearish</div>
+            <div class="chip selected" data-chip-group="marketCondition" data-value="Neutral">Neutral</div>
+            <div class="chip" data-chip-group="marketCondition" data-value="Volatile">Volatile</div>
           </div>
         </div>
 
-        <div class="form-section">
-          <p class="section-label">Psychology &amp; Emotions</p>
-          <div class="field-grid">
-            <div class="field" style="grid-column:1/-1;">
+        <div class="form-section glass">
+          <h3 class="form-section-title"><span class="fs-num">5</span> Psychology &amp; Emotions</h3>
+          <p class="form-section-sub">Your honest state of mind — this is where real edge gets found.</p>
+          <div class="form-grid">
+            <div class="field field-wide">
               <label>Before Trade</label>
-              <div class="pill-group" data-field="emotionBefore" data-multi="false">
-                <button type="button" class="pill" data-value="Confident">Confident</button>
-                <button type="button" class="pill" data-value="Calm">Calm</button>
-                <button type="button" class="pill" data-value="Anxious">Anxious</button>
-                <button type="button" class="pill" data-value="FOMO">FOMO</button>
-                <button type="button" class="pill" data-value="Excited">Excited</button>
-                <button type="button" class="pill" data-value="Fearful">Fearful</button>
+              <div class="chip-group">
+                <div class="chip" data-tone="pos" data-chip-group="emotionBefore" data-value="Confident">Confident</div>
+                <div class="chip selected" data-tone="pos" data-chip-group="emotionBefore" data-value="Calm">Calm</div>
+                <div class="chip" data-tone="neg" data-chip-group="emotionBefore" data-value="Anxious">Anxious</div>
+                <div class="chip" data-tone="neg" data-chip-group="emotionBefore" data-value="FOMO">FOMO</div>
+                <div class="chip" data-tone="neu" data-chip-group="emotionBefore" data-value="Excited">Excited</div>
+                <div class="chip" data-tone="neg" data-chip-group="emotionBefore" data-value="Fearful">Fearful</div>
               </div>
             </div>
-            <div class="field" style="grid-column:1/-1;">
+            <div class="field field-wide">
               <label>During Trade</label>
-              <div class="pill-group" data-field="emotionDuring" data-multi="false">
-                <button type="button" class="pill" data-value="Calm">Calm</button>
-                <button type="button" class="pill" data-value="Nervous">Nervous</button>
-                <button type="button" class="pill" data-value="Confident">Confident</button>
-                <button type="button" class="pill" data-value="Stressful">Stressful</button>
-                <button type="button" class="pill" data-value="Patient">Patient</button>
-                <button type="button" class="pill" data-value="Impulsive">Impulsive</button>
+              <div class="chip-group">
+                <div class="chip selected" data-tone="pos" data-chip-group="emotionDuring" data-value="Calm">Calm</div>
+                <div class="chip" data-tone="neg" data-chip-group="emotionDuring" data-value="Nervous">Nervous</div>
+                <div class="chip" data-tone="pos" data-chip-group="emotionDuring" data-value="Confident">Confident</div>
+                <div class="chip" data-tone="neg" data-chip-group="emotionDuring" data-value="Stressful">Stressful</div>
+                <div class="chip" data-tone="pos" data-chip-group="emotionDuring" data-value="Patient">Patient</div>
+                <div class="chip" data-tone="neg" data-chip-group="emotionDuring" data-value="Impulsive">Impulsive</div>
               </div>
             </div>
-            <div class="field" style="grid-column:1/-1;">
+            <div class="field field-wide">
               <label>After Trade</label>
-              <div class="pill-group" data-field="emotionAfter" data-multi="false">
-                <button type="button" class="pill" data-value="Satisfied">Satisfied</button>
-                <button type="button" class="pill" data-value="Regretful">Regretful</button>
-                <button type="button" class="pill" data-value="Frustrated">Frustrated</button>
-                <button type="button" class="pill" data-value="Excited">Excited</button>
-                <button type="button" class="pill" data-value="Disappointed">Disappointed</button>
+              <div class="chip-group">
+                <div class="chip selected" data-tone="pos" data-chip-group="emotionAfter" data-value="Satisfied">Satisfied</div>
+                <div class="chip" data-tone="neg" data-chip-group="emotionAfter" data-value="Regrets">Regrets</div>
+                <div class="chip" data-tone="neg" data-chip-group="emotionAfter" data-value="Frustrated">Frustrated</div>
+                <div class="chip" data-tone="pos" data-chip-group="emotionAfter" data-value="Excited">Excited</div>
+                <div class="chip" data-tone="neg" data-chip-group="emotionAfter" data-value="Disappointed">Disappointed</div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="form-section">
-          <p class="section-label">Trade Analysis</p>
-          <div class="field-grid">
-            <div class="field" style="grid-column:1/-1;">
-              <label for="f-entryreason">Entry Reason</label>
-              <textarea id="f-entryreason" placeholder="Why did you take this trade?"></textarea>
+        <div class="form-section glass">
+          <h3 class="form-section-title"><span class="fs-num">6</span> Trade Analysis</h3>
+          <p class="form-section-sub">Write it while it's fresh — future you will thank present you.</p>
+          <div class="form-grid">
+            <div class="field field-wide">
+              <label for="entry-reason">Entry Reason</label>
+              <textarea id="entry-reason" placeholder="Why did you take this trade?"></textarea>
             </div>
-            <div class="field" style="grid-column:1/-1;">
-              <label for="f-exitreason">Exit Reason</label>
-              <textarea id="f-exitreason" placeholder="Why did you close this trade?"></textarea>
+            <div class="field field-wide">
+              <label for="exit-reason">Exit Reason</label>
+              <textarea id="exit-reason" placeholder="Why did you exit when you did?"></textarea>
             </div>
-            <div class="field" style="grid-column:1/-1;">
-              <label for="f-mistakes">Mistakes (if any)</label>
-              <textarea id="f-mistakes" placeholder="What went wrong, if anything?"></textarea>
+            <div class="field field-wide">
+              <label for="mistake-notes">Mistakes (if any)</label>
+              <textarea id="mistake-notes" placeholder="What, if anything, would you do differently?"></textarea>
             </div>
-            <div class="field" style="grid-column:1/-1;">
-              <label for="f-learnings">Key Learnings</label>
-              <textarea id="f-learnings" placeholder="What will you take forward from this trade?"></textarea>
+            <div class="field field-wide">
+              <label for="key-learnings">Key Learnings</label>
+              <textarea id="key-learnings" placeholder="What did this trade teach you?"></textarea>
             </div>
           </div>
         </div>
 
-        <div class="form-section">
-          <p class="section-label">Self Ratings (1–10)</p>
-          <div class="field-grid">
-            <div class="field">
-              <label>Discipline <span class="hint">(followed plan?)</span></label>
-              <div class="star-rating" data-field="discipline">
-                <div class="star-row"></div>
-                <span class="star-value">—</span>
-              </div>
-            </div>
-            <div class="field">
-              <label>Patience</label>
-              <div class="star-rating" data-field="patience">
-                <div class="star-row"></div>
-                <span class="star-value">—</span>
-              </div>
-            </div>
-            <div class="field">
-              <label>Execution</label>
-              <div class="star-rating" data-field="execution">
-                <div class="star-row"></div>
-                <span class="star-value">—</span>
-              </div>
-            </div>
+        <div class="form-section glass">
+          <h3 class="form-section-title"><span class="fs-num">7</span> Self Rating</h3>
+          <p class="form-section-sub">Rate yourself honestly, not your result.</p>
+          <div class="rating-row">
+            <div class="rating-label"><strong>Discipline</strong><span>Did you follow your plan?</span></div>
+            <div class="star-rating" id="stars-ratingDiscipline">
+<span class="star" data-star-group="ratingDiscipline" data-value="1">★</span><span class="star" data-star-group="ratingDiscipline" data-value="2">★</span><span class="star" data-star-group="ratingDiscipline" data-value="3">★</span><span class="star" data-star-group="ratingDiscipline" data-value="4">★</span><span class="star" data-star-group="ratingDiscipline" data-value="5">★</span><span class="star" data-star-group="ratingDiscipline" data-value="6">★</span><span class="star" data-star-group="ratingDiscipline" data-value="7">★</span><span class="star" data-star-group="ratingDiscipline" data-value="8">★</span><span class="star" data-star-group="ratingDiscipline" data-value="9">★</span><span class="star" data-star-group="ratingDiscipline" data-value="10">★</span>            </div>
+            <span class="star-value-label" id="ratingDiscipline-value-label">5/10</span>
+          </div>
+          <div class="rating-row">
+            <div class="rating-label"><strong>Patience</strong><span>Did you wait for the right moment?</span></div>
+            <div class="star-rating" id="stars-ratingPatience">
+<span class="star" data-star-group="ratingPatience" data-value="1">★</span><span class="star" data-star-group="ratingPatience" data-value="2">★</span><span class="star" data-star-group="ratingPatience" data-value="3">★</span><span class="star" data-star-group="ratingPatience" data-value="4">★</span><span class="star" data-star-group="ratingPatience" data-value="5">★</span><span class="star" data-star-group="ratingPatience" data-value="6">★</span><span class="star" data-star-group="ratingPatience" data-value="7">★</span><span class="star" data-star-group="ratingPatience" data-value="8">★</span><span class="star" data-star-group="ratingPatience" data-value="9">★</span><span class="star" data-star-group="ratingPatience" data-value="10">★</span>            </div>
+            <span class="star-value-label" id="ratingPatience-value-label">5/10</span>
+          </div>
+          <div class="rating-row">
+            <div class="rating-label"><strong>Execution</strong><span>Did you execute cleanly?</span></div>
+            <div class="star-rating" id="stars-ratingExecution">
+<span class="star" data-star-group="ratingExecution" data-value="1">★</span><span class="star" data-star-group="ratingExecution" data-value="2">★</span><span class="star" data-star-group="ratingExecution" data-value="3">★</span><span class="star" data-star-group="ratingExecution" data-value="4">★</span><span class="star" data-star-group="ratingExecution" data-value="5">★</span><span class="star" data-star-group="ratingExecution" data-value="6">★</span><span class="star" data-star-group="ratingExecution" data-value="7">★</span><span class="star" data-star-group="ratingExecution" data-value="8">★</span><span class="star" data-star-group="ratingExecution" data-value="9">★</span><span class="star" data-star-group="ratingExecution" data-value="10">★</span>            </div>
+            <span class="star-value-label" id="ratingExecution-value-label">5/10</span>
           </div>
         </div>
 
         <div class="form-actions">
-          <button type="button" class="btn btn-ghost" id="btnResetForm">Clear form</button>
-          <button type="submit" class="btn btn-gold" id="btnSaveTrade">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M5 12L10 17L20 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Save Trade
-          </button>
+          <button type="button" class="btn btn-ghost" id="cancel-edit-btn" style="display:none;">Cancel Edit</button>
+          <button type="submit" class="btn btn-primary" id="submit-btn">Save Trade</button>
         </div>
       </form>
-    </div>
-  </div>
-
-  <!-- ===================== PANEL: HISTORY ===================== -->
-  <div class="tab-panel" id="panel-history">
-    <div class="card">
-      <div class="card-header">
-        <div>
-          <p class="card-title">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M8 6H21M8 12H21M8 18H21M3 6H3.01M3 12H3.01M3 18H3.01" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Trade History
-          </p>
-          <p class="card-sub" id="historyCount">0 trades logged</p>
-        </div>
+    </section>
+    <section id="tab-history" class="tab-panel">
+      <div class="section-header">
+        <h2>Trade History</h2>
+        <button class="btn btn-secondary" id="new-trade-btn">+ New Trade</button>
       </div>
-      <div class="table-toolbar">
-        <div class="field">
-          <label>Search</label>
-          <input type="text" id="filterSearch" placeholder="Instrument, reason, notes…">
-        </div>
-        <div class="field">
-          <label>Instrument</label>
-          <select id="filterInstrument"><option value="">All</option></select>
-        </div>
-        <div class="field">
-          <label>Type</label>
-          <select id="filterType"><option value="">All</option><option value="Buy">Buy</option><option value="Sell">Sell</option><option value="Break Even">Break Even</option></select>
-        </div>
-        <div class="field">
-          <label>Strategy</label>
-          <select id="filterStrategy"><option value="">All</option></select>
-        </div>
-        <div class="field">
-          <label>From</label>
-          <input type="date" id="filterFrom">
-        </div>
-        <div class="field">
-          <label>To</label>
-          <input type="date" id="filterTo">
-        </div>
-        <button class="btn btn-ghost btn-sm" id="btnClearFilters" type="button" style="margin-bottom:1px;">Clear</button>
+      <div class="summary-chips" id="history-summary-chips" style="margin-bottom:16px;"></div>
+      <div class="filters-bar glass">
+        <input type="text" id="filter-search" placeholder="Search instrument or notes…">
+        <select id="filter-result">
+          <option value="all">All Results</option>
+          <option value="Win">Wins</option>
+          <option value="Loss">Losses</option>
+          <option value="Break Even">Break Even</option>
+        </select>
+        <select id="filter-strategy"><option value="all">All Strategies</option></select>
+        <select id="filter-type">
+          <option value="all">All Types</option>
+          <option value="Buy">Buy</option>
+          <option value="Sell">Sell</option>
+          <option value="Break Even">Break Even</option>
+        </select>
+        <input type="date" id="filter-from" title="From date">
+        <input type="date" id="filter-to" title="To date">
+        <button class="btn btn-ghost" id="clear-filters-btn">Clear</button>
       </div>
-      <div class="table-scroll">
-        <table>
+      <div class="table-wrap glass">
+        <table class="history-table">
           <thead>
             <tr>
-              <th data-sort="date">Date <span class="sort-ind"></span></th>
-              <th data-sort="instrument">Instrument <span class="sort-ind"></span></th>
-              <th data-sort="type">Type <span class="sort-ind"></span></th>
-              <th data-sort="lots">Lots <span class="sort-ind"></span></th>
-              <th data-sort="entry">Entry <span class="sort-ind"></span></th>
-              <th data-sort="exit">Exit <span class="sort-ind"></span></th>
-              <th data-sort="rr">RR <span class="sort-ind"></span></th>
-              <th data-sort="pnl">P&amp;L <span class="sort-ind"></span></th>
-              <th data-sort="setupQuality">Setup <span class="sort-ind"></span></th>
-              <th data-sort="status">Status <span class="sort-ind"></span></th>
-              <th></th>
+              <th data-sort="date">Date</th>
+              <th data-sort="instrument">Instrument</th>
+              <th>Type</th>
+              <th data-sort="lotSize">Lots</th>
+              <th data-sort="riskReward">R:R</th>
+              <th>Strategy</th>
+              <th>Quality</th>
+              <th data-sort="pnl">P/L</th>
+              <th>Result</th>
+              <th class="actions-th">Actions</th>
             </tr>
           </thead>
-          <tbody id="historyTbody"></tbody>
+          <tbody id="history-tbody"></tbody>
         </table>
-      </div>
-      <div id="historyEmpty" class="empty-state hidden">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M8 6H21M8 12H21M8 18H21M3 6H3.01M3 12H3.01M3 18H3.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <p class="lead">No trades yet</p>
-        <p>Log your first trade in the Trade Entry tab and it'll show up here.</p>
-      </div>
-      <div class="pagination hidden" id="historyPagination"></div>
-    </div>
-  </div>
-
-  <!-- ===================== PANEL: CALENDAR ===================== -->
-  <div class="tab-panel" id="panel-calendar">
-    <div class="card">
-      <div class="card-header">
-        <p class="card-title">
-          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="2.2"/><path d="M3 10H21M8 3V6M16 3V6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
-          Trading Calendar
-        </p>
-      </div>
-      <div class="stat-grid" id="calStatGrid"></div>
-      <div class="cal-nav">
-        <button class="btn btn-sm" id="calPrev" type="button">← Prev</button>
-        <div class="cal-title" id="calTitle">—</div>
-        <div class="cal-nav-btns">
-          <button class="btn btn-sm" id="calToday" type="button">Today</button>
-          <button class="btn btn-sm" id="calNext" type="button">Next →</button>
+        <div id="history-empty" class="empty-state" style="display:none;">
+          <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8 13 13.7l-4-4L3.7 16"/></svg>
+          <strong>No trades yet</strong>
+          Log your first trade in the Entry tab to start building your edge.
         </div>
       </div>
-      <div class="cal-grid" id="calDowRow"></div>
-      <div class="cal-grid" id="calGrid" style="margin-top:7px;"></div>
-    </div>
-  </div>
+    </section>
 
-  <!-- ===================== PANEL: ANALYTICS ===================== -->
-  <div class="tab-panel" id="panel-analytics">
-    <div id="analyticsEmpty" class="card empty-state hidden">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M4 20V10M11 20V4M18 20V14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <p class="lead">No analytics yet</p>
-      <p>Log a few closed trades and your performance breakdown will appear here.</p>
-    </div>
-    <div id="analyticsContent">
-      <div class="stat-grid" id="analyticsStatGrid"></div>
-      <div class="card">
-        <p class="card-title">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-          Insights
-        </p>
-        <div class="insight-list" id="insightList"></div>
+    <section id="tab-calendar" class="tab-panel">
+      <div class="section-header">
+        <h2>Trading Calendar</h2>
+        <div class="calendar-nav">
+          <button class="icon-btn" id="cal-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <span id="cal-month-label" class="mono">—</span>
+          <button class="icon-btn" id="cal-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+          <button class="btn btn-ghost" id="cal-today">Today</button>
+        </div>
       </div>
-      <div class="card">
-        <p class="card-title">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M4 20V10M11 20V4M18 20V14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Equity Curve
-        </p>
-        <p class="card-sub" style="margin-bottom:12px;">Cumulative P&amp;L across closed trades, in order.</p>
-        <div class="chart-box" id="equityChart"></div>
+      <div class="stats-grid" id="calendar-stats"></div>
+      <div class="calendar-wrap glass">
+        <div class="calendar-weekdays">
+          <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+        </div>
+        <div class="calendar-grid" id="calendar-grid"></div>
       </div>
-      <div class="chart-grid-2" id="breakdownCharts"></div>
-    </div>
-  </div>
+      <div class="day-detail glass" id="day-detail-panel"></div>
+    </section>
+    <section id="tab-analytics" class="tab-panel">
+      <div class="section-header"><h2>Trade Journal Analytics</h2></div>
+      <div class="stats-grid" id="analytics-overview"></div>
 
-  <!-- ===================== PANEL: SIMULATION ===================== -->
-  <div class="tab-panel" id="panel-simulation">
-    <div class="card">
-      <p class="card-title">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M3 17C5 17 5 8 8 8C11 8 11 20 14 20C17 20 17 6 21 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Trade Simulation
-      </p>
-      <p class="card-sub" style="margin-bottom:16px;">Run a Monte Carlo projection using your real trade history, or model a custom hypothetical scenario.</p>
+      <div class="analytics-row">
+        <div class="glass chart-card">
+          <h3>Equity Curve</h3>
+          <p class="hint">Cumulative P/L across every logged trade, in order.</p>
+          <div id="equity-chart-container"></div>
+        </div>
+        <div class="glass chart-card chart-card-sm">
+          <h3>Win / Loss / Break Even</h3>
+          <p class="hint">Outcome distribution across all trades.</p>
+          <div id="donut-chart-container"></div>
+        </div>
+      </div>
+
+      <div class="glass breakdown-card">
+        <h3>Strategy Performance</h3>
+        <p class="hint">Which setups are actually making you money, ranked by total P/L.</p>
+        <div id="strategy-breakdown"></div>
+      </div>
+
+      <div class="breakdown-grid">
+        <div class="glass breakdown-card"><h3>Setup Quality</h3><p class="hint">Does grading a setup higher actually predict a better result?</p><div id="quality-breakdown"></div></div>
+        <div class="glass breakdown-card"><h3>Trading Style</h3><p class="hint">Intraday, swing, or scalp — where's your edge?</p><div id="tradingtype-breakdown"></div></div>
+        <div class="glass breakdown-card"><h3>Market Condition</h3><p class="hint">Which conditions you trade best.</p><div id="condition-breakdown"></div></div>
+      </div>
+
+      <div class="glass breakdown-card">
+        <h3>Psychology Impact</h3>
+        <p class="hint">How your emotional state — before, during, and after — correlates with results.</p>
+        <div class="psych-tabs">
+          <button class="psych-tab-btn active" data-psych="emotionBefore">Before Trade</button>
+          <button class="psych-tab-btn" data-psych="emotionDuring">During Trade</button>
+          <button class="psych-tab-btn" data-psych="emotionAfter">After Trade</button>
+        </div>
+        <div id="psych-breakdown"></div>
+      </div>
+
+      <div class="glass breakdown-card">
+        <h3>Discipline, Patience &amp; Execution</h3>
+        <p class="hint">Do your own self-ratings actually line up with your P/L?</p>
+        <div class="breakdown-grid" id="rating-breakdown"></div>
+      </div>
+
+      <div class="glass breakdown-card">
+        <h3>Day of Week</h3>
+        <p class="hint">Some days just trade better than others.</p>
+        <div id="dow-breakdown"></div>
+      </div>
+    </section>
+
+    <section id="tab-simulation" class="tab-panel">
+      <div class="section-header"><h2>Trade Simulator</h2></div>
+      <p class="hint" style="margin-top:-10px;">Run a Monte Carlo projection — either from your real trading stats, or from assumptions you set yourself.</p>
+
       <div class="sim-mode-toggle">
-        <button class="sim-mode-btn active" data-simmode="historical" type="button">Based on History</button>
-        <button class="sim-mode-btn" data-simmode="custom" type="button">Custom Simulation</button>
+        <button class="chip selected" data-sim-mode="history">Based on My History</button>
+        <button class="chip" data-sim-mode="custom">Custom Simulation</button>
       </div>
 
-      <div class="sim-panel active" id="simPanelHistorical">
-        <div id="simHistoricalGuard" class="empty-state hidden">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M12 9V13M12 17H12.01M10.29 3.86L1.82 18A2 2 0 003.54 21H20.46A2 2 0 0022.18 18L13.71 3.86A2 2 0 0010.29 3.86Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <p class="lead">Not enough data yet</p>
-          <p>Log at least 5 closed trades (with stop losses set) to unlock a history-based simulation. Try Custom Simulation in the meantime.</p>
+      <div class="glass sim-panel">
+        <div class="sim-history-summary" id="sim-history-summary"></div>
+        <div class="form-grid sim-inputs">
+          <div class="field"><label for="sim-winrate">Win Rate (%)</label><input type="number" id="sim-winrate" min="0" max="100" step="0.1" value="50"></div>
+          <div class="field"><label for="sim-rr">Avg Risk:Reward</label><input type="number" id="sim-rr" min="0" step="0.1" value="2"></div>
+          <div class="field"><label for="sim-balance">Starting Balance ($)</label><input type="number" id="sim-balance" min="1" step="1" value="10000"></div>
+          <div class="field"><label for="sim-risk">Risk per Trade (%)</label><input type="number" id="sim-risk" min="0.1" max="100" step="0.1" value="1"></div>
+          <div class="field"><label for="sim-numtrades">Number of Trades</label><input type="number" id="sim-numtrades" min="1" max="2000" step="1" value="100"></div>
+          <div class="field"><label for="sim-numruns">Simulation Runs</label><input type="number" id="sim-numruns" min="10" max="1000" step="10" value="200"></div>
         </div>
-        <div id="simHistoricalBody" class="hidden">
-          <div class="stat-grid" id="simHistoricalStats"></div>
-          <div class="field-grid">
-            <div class="field">
-              <label for="sh-balance">Starting Balance ($)</label>
-              <input type="number" id="sh-balance" value="10000" min="1" step="any">
-            </div>
-            <div class="field">
-              <label for="sh-risk">Risk per Trade (%)</label>
-              <input type="number" id="sh-risk" value="1" min="0.1" max="100" step="0.1">
-            </div>
-            <div class="field">
-              <label for="sh-trades">Number of Trades</label>
-              <input type="number" id="sh-trades" value="100" min="10" max="500" step="1">
-            </div>
-            <div class="field">
-              <label for="sh-runs">Simulation Runs</label>
-              <input type="number" id="sh-runs" value="300" min="50" max="1000" step="10">
-            </div>
-          </div>
-          <div class="form-actions" style="justify-content:flex-start;margin-top:16px;">
-            <button class="btn btn-gold" id="btnRunHistorical" type="button">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M5 3L19 12L5 21V3Z" fill="currentColor"/></svg>
-              Run Simulation
-            </button>
-          </div>
-          <div id="simHistoricalResults" style="margin-top:20px;"></div>
-        </div>
+        <button class="btn btn-primary" id="run-sim-btn">Run Simulation</button>
       </div>
 
-      <div class="sim-panel" id="simPanelCustom">
-        <div class="field-grid">
-          <div class="field">
-            <label for="sc-balance">Starting Balance ($)</label>
-            <input type="number" id="sc-balance" value="10000" min="1" step="any">
-          </div>
-          <div class="field">
-            <label for="sc-risk">Risk per Trade (%)</label>
-            <input type="number" id="sc-risk" value="1" min="0.1" max="100" step="0.1">
-          </div>
-          <div class="field">
-            <label for="sc-winrate">Win Rate (%)</label>
-            <input type="number" id="sc-winrate" value="50" min="1" max="99" step="1">
-          </div>
-          <div class="field">
-            <label for="sc-rr">Reward : Risk Ratio</label>
-            <input type="number" id="sc-rr" value="2" min="0.1" step="0.1">
-          </div>
-          <div class="field">
-            <label for="sc-trades">Number of Trades</label>
-            <input type="number" id="sc-trades" value="100" min="10" max="500" step="1">
-          </div>
-          <div class="field">
-            <label for="sc-runs">Simulation Runs</label>
-            <input type="number" id="sc-runs" value="300" min="50" max="1000" step="10">
-          </div>
+      <div class="sim-results" id="sim-results" style="display:none;">
+        <div class="stats-grid" id="sim-stats"></div>
+        <div class="glass chart-card">
+          <h3>Simulated Equity Paths</h3>
+          <p class="hint">Every faint gold line is one possible future. The bright line is the average across all of them.</p>
+          <div id="sim-chart-container"></div>
         </div>
-        <div class="form-actions" style="justify-content:flex-start;margin-top:16px;">
-          <button class="btn btn-gold" id="btnRunCustom" type="button">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M5 3L19 12L5 21V3Z" fill="currentColor"/></svg>
-            Run Simulation
-          </button>
-        </div>
-        <div id="simCustomResults" style="margin-top:20px;"></div>
       </div>
-    </div>
-  </div>
+    </section>
 
+  </main>
 </div>
-
-<!-- ===================== MODALS ===================== -->
-<div class="modal-overlay" id="detailModal">
-  <div class="modal-box">
-    <div class="modal-head">
-      <h3 id="detailModalTitle">Trade Detail</h3>
-      <button class="modal-close" id="detailModalClose" type="button">✕</button>
-    </div>
-    <div class="modal-body" id="detailModalBody"></div>
-    <div class="modal-foot">
-      <button class="btn btn-danger btn-sm" id="detailDeleteBtn" type="button">Delete</button>
-      <button class="btn btn-gold btn-sm" id="detailEditBtn" type="button">Edit Trade</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="dayModal">
-  <div class="modal-box sm">
-    <div class="modal-head">
-      <h3 id="dayModalTitle">Trades</h3>
-      <button class="modal-close" id="dayModalClose" type="button">✕</button>
-    </div>
-    <div class="modal-body" id="dayModalBody"></div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="confirmModal">
-  <div class="modal-box sm">
-    <div class="modal-head">
-      <h3 id="confirmModalTitle">Are you sure?</h3>
-      <button class="modal-close" id="confirmModalClose" type="button">✕</button>
-    </div>
-    <div class="modal-body"><p id="confirmModalText" style="font-size:13px;color:var(--text-1);line-height:1.6;"></p></div>
-    <div class="modal-foot">
-      <button class="btn btn-ghost btn-sm" id="confirmModalCancel" type="button">Cancel</button>
-      <button class="btn btn-danger btn-sm" id="confirmModalOk" type="button">Confirm</button>
-    </div>
-  </div>
-</div>
-
-<div class="toast-container" id="toastContainer"></div>
-
 <script>
-/* =========================================================
-   SECTION: CONSTANTS
-   ========================================================= */
-const STORAGE_KEY = 'trade-journal-trades-v1';
-const STRATEGY_LIST = ['Fib 0, 0.5 & 1','Order Block','Advanced Order Block','Candle Rejection','Support & Resistance','Equal High Liquidity','High Liquidity','Market Structure'];
-const DOW_LABELS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+/* ============================================================
+   CONSTANTS
+   ============================================================ */
+const STORAGE_KEY = 'trades';
+const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const MONTH_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DOW_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const STRATEGIES = ['Fibonacci (0/0.5/1)','Order Block','Advanced Order Block','Candle Rejection','Support & Resistance','Equal High Liquidity','High Liquidity','Market Structure','Other'];
 
-/* =========================================================
-   SECTION: STATE
-   ========================================================= */
-let trades = [];
+/* ============================================================
+   STATE
+   ============================================================ */
+let state = {
+  trades: [],
+  editingId: null,
+  historyFilters: { search:'', result:'all', strategy:'all', type:'all', from:'', to:'', sortBy:'date', sortDir:'desc' },
+  calendar: { year: new Date().getFullYear(), month: new Date().getMonth() },
+  simMode: 'history',
+  activeTab: 'entry',
+  activePsych: 'emotionBefore'
+};
+
+let formState = {
+  tradeType: 'Buy',
+  strategies: [],
+  setupQuality: 'Good',
+  tradingType: 'Intraday',
+  marketCondition: 'Neutral',
+  emotionBefore: 'Calm',
+  emotionDuring: 'Calm',
+  emotionAfter: 'Satisfied',
+  ratingDiscipline: 5,
+  ratingPatience: 5,
+  ratingExecution: 5
+};
+
 let storageAvailable = true;
-let editingId = null;
-let historySort = { key:'date', dir:'desc' };
-let historyPage = 1;
-const HISTORY_PAGE_SIZE = 20;
-let calYear, calMonth; // 0-indexed month
-let confirmCallback = null;
 
-/* =========================================================
-   SECTION: UTILITIES
-   ========================================================= */
-function escapeHtml(str){
-  if(str===null||str===undefined) return '';
-  return String(str).replace(/[&<>"']/g, function(c){
-    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
-  });
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+function uid(){ return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,9); }
+
+function esc(str){
+  if (str === null || str === undefined) return '';
+  return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
-function uid(){ return 'tr_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,9); }
+
+function parseISODate(s){
+  const parts = s.split('-').map(Number);
+  return { year: parts[0], month: parts[1]-1, day: parts[2] };
+}
+function isoDate(year, month, day){
+  const mm = String(month+1).padStart(2,'0');
+  const dd = String(day).padStart(2,'0');
+  return year + '-' + mm + '-' + dd;
+}
 function todayStr(){
   const d = new Date();
-  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  return isoDate(d.getFullYear(), d.getMonth(), d.getDate());
 }
-function parseLocalDate(str){
-  if(!str) return null;
-  const parts = str.split('-');
-  if(parts.length!==3) return null;
-  return new Date(Number(parts[0]), Number(parts[1])-1, Number(parts[2]));
+function daysInMonth(year, month){ return new Date(year, month+1, 0).getDate(); }
+function firstDayOfWeek(year, month){ return new Date(year, month, 1).getDay(); }
+function dayOfWeekFromISO(dateStr){
+  const {year,month,day} = parseISODate(dateStr);
+  return new Date(year, month, day).getDay();
 }
-function fmtMoney(n){
-  if(n===null||n===undefined||isNaN(n)) return '—';
-  const sign = n<0?'-':'';
-  return sign+'$'+Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-}
-function fmtNum(n,dp){
-  if(n===null||n===undefined||isNaN(n)) return '—';
-  return Number(n).toLocaleString('en-US',{minimumFractionDigits:dp,maximumFractionDigits:dp});
-}
-function fmtPct(n,dp){
-  if(n===null||n===undefined||isNaN(n)) return '—';
-  return Number(n).toFixed(dp===undefined?1:dp)+'%';
-}
-function clamp(v,min,max){ return Math.max(min,Math.min(max,v)); }
-function num(v){ const n = parseFloat(v); return isNaN(n)?null:n; }
 
-/* =========================================================
-   SECTION: STORAGE
-   ========================================================= */
+function formatCurrency(num){
+  if (num === null || num === undefined || isNaN(num)) return '—';
+  const sign = num < 0 ? '-' : (num > 0 ? '+' : '');
+  const abs = Math.abs(num);
+  return sign + '$' + abs.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+}
+function formatCurrencyShort(num){
+  if (num === null || num === undefined || isNaN(num)) return '—';
+  const sign = num < 0 ? '-' : '';
+  const abs = Math.abs(num);
+  if (abs >= 1000) return sign + '$' + (abs/1000).toFixed(1) + 'k';
+  return sign + '$' + abs.toFixed(0);
+}
+function formatDateShort(dateStr){
+  if (!dateStr) return '—';
+  const {month,day} = parseISODate(dateStr);
+  return MONTH_SHORT[month] + ' ' + day;
+}
+function formatDateLong(dateStr){
+  if (!dateStr) return '—';
+  const {year,month,day} = parseISODate(dateStr);
+  return MONTH_NAMES[month] + ' ' + day + ', ' + year;
+}
+function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+
+function emptyStateHtml(message, sub){
+  return '<div class="empty-state"><strong>' + esc(message) + '</strong>' + (sub ? esc(sub) : '') + '</div>';
+}
+
+/* ============================================================
+   STORAGE (Claude artifact persistent storage)
+   ============================================================ */
 async function loadTrades(){
-  if(typeof window.storage === 'undefined'){
+  if (typeof window.storage === 'undefined'){
     storageAvailable = false;
-    document.getElementById('storageBanner').classList.add('show');
-    return [];
+    showStorageBanner();
+    state.trades = [];
+    return;
   }
-  try{
+  try {
     const res = await window.storage.get(STORAGE_KEY, false);
-    return res && res.value ? JSON.parse(res.value) : [];
-  }catch(e){
-    return [];
+    state.trades = (res && res.value) ? JSON.parse(res.value) : [];
+  } catch (e){
+    state.trades = [];
   }
-}
-async function persistTrades(){
-  setSaveState('saving');
-  if(!storageAvailable){
-    setSaveState('error','Session only');
-    return false;
-  }
-  try{
-    const res = await window.storage.set(STORAGE_KEY, JSON.stringify(trades), false);
-    if(res){
-      setSaveState('ok');
-      return true;
-    }
-    setSaveState('error','Save failed');
-    return false;
-  }catch(e){
-    setSaveState('error','Save failed');
-    return false;
-  }
-}
-function setSaveState(state,msg){
-  const dot = document.getElementById('saveDot');
-  const txt = document.getElementById('saveText');
-  dot.classList.remove('saving','error');
-  if(state==='saving'){ dot.classList.add('saving'); txt.textContent='Saving…'; }
-  else if(state==='error'){ dot.classList.add('error'); txt.textContent=msg||'Not saved'; }
-  else { txt.textContent='All changes saved'; }
 }
 
-function downloadFile(filename, content, mime){
-  const blob = new Blob([content], {type:mime||'application/json'});
+async function saveTrades(){
+  if (!storageAvailable) return;
+  try {
+    const res = await window.storage.set(STORAGE_KEY, JSON.stringify(state.trades), false);
+    if (!res) showToast('Could not save — storage error.', 'error');
+  } catch (e){
+    showToast('Could not save — storage error.', 'error');
+  }
+}
+
+function showStorageBanner(){
+  const banner = document.getElementById('storage-banner');
+  if (banner) banner.style.display = 'flex';
+}
+
+/* ============================================================
+   CALCULATIONS
+   ============================================================ */
+function calcRiskReward(entry, sl, target){
+  if (isNaN(entry) || isNaN(sl) || isNaN(target)) return null;
+  const risk = Math.abs(entry - sl);
+  const reward = Math.abs(target - entry);
+  if (risk === 0) return null;
+  return reward / risk;
+}
+
+function calcResult(pnl, tradeType){
+  if (tradeType === 'Break Even') return 'Break Even';
+  if (isNaN(pnl)) return 'Break Even';
+  if (pnl > 0) return 'Win';
+  if (pnl < 0) return 'Loss';
+  return 'Break Even';
+}
+
+function tradeSortKey(t){ return t.date + '_' + (t.createdAt||''); }
+
+function sortTradesByDate(trades){
+  return [...trades].sort((a,b) => tradeSortKey(a) < tradeSortKey(b) ? -1 : 1);
+}
+
+function computeOverview(trades){
+  const total = trades.length;
+  const wins = trades.filter(t => t.result === 'Win');
+  const losses = trades.filter(t => t.result === 'Loss');
+  const bes = trades.filter(t => t.result === 'Break Even');
+  const totalPnl = trades.reduce((s,t) => s + (t.pnl||0), 0);
+  const grossProfit = wins.reduce((s,t) => s + t.pnl, 0);
+  const grossLoss = Math.abs(losses.reduce((s,t) => s + t.pnl, 0));
+  const profitFactor = grossLoss > 0 ? (grossProfit / grossLoss) : (grossProfit > 0 ? Infinity : 0);
+  const avgWin = wins.length ? grossProfit / wins.length : 0;
+  const avgLoss = losses.length ? grossLoss / losses.length : 0;
+  const validRR = trades.filter(t => t.riskReward !== null && t.riskReward !== undefined && !isNaN(t.riskReward));
+  const avgRR = validRR.length ? validRR.reduce((s,t) => s + t.riskReward, 0) / validRR.length : 0;
+  const bestTrade = trades.length ? Math.max(...trades.map(t => t.pnl)) : 0;
+  const worstTrade = trades.length ? Math.min(...trades.map(t => t.pnl)) : 0;
+  const winRate = total ? (wins.length / total * 100) : 0;
+
+  const sorted = sortTradesByDate(trades);
+  let streak = 0, streakType = null;
+  for (let i = sorted.length - 1; i >= 0; i--){
+    const r = sorted[i].result;
+    if (r === 'Break Even') break;
+    if (streakType === null){ streakType = r; streak = 1; }
+    else if (r === streakType) streak++;
+    else break;
+  }
+
+  return { total, winRate, totalPnl, profitFactor, avgWin, avgLoss, avgRR, bestTrade, worstTrade,
+    streak, streakType, winsCount: wins.length, lossesCount: losses.length, beCount: bes.length };
+}
+
+function computeGroupStats(trades, keyFn){
+  const map = new Map();
+  trades.forEach(t => {
+    const keys = keyFn(t);
+    const arr = Array.isArray(keys) ? keys : [keys];
+    arr.forEach(k => {
+      if (k === null || k === undefined || k === '') return;
+      if (!map.has(k)) map.set(k, { label:k, count:0, wins:0, totalPnl:0 });
+      const g = map.get(k);
+      g.count++;
+      if (t.result === 'Win') g.wins++;
+      g.totalPnl += (t.pnl||0);
+    });
+  });
+  return Array.from(map.values())
+    .map(g => ({ ...g, winRate: g.count ? (g.wins/g.count*100) : 0, avgPnl: g.count ? (g.totalPnl/g.count) : 0 }))
+    .sort((a,b) => b.totalPnl - a.totalPnl);
+}
+
+function computeEquityCurve(trades){
+  const sorted = sortTradesByDate(trades);
+  let cum = 0;
+  return sorted.map(t => { cum += (t.pnl||0); return { date: t.date, value: cum, id: t.id }; });
+}
+
+function computeMonthData(year, month){
+  const days = {};
+  state.trades.forEach(t => {
+    const {year:ty, month:tm} = parseISODate(t.date);
+    if (ty === year && tm === month){
+      if (!days[t.date]) days[t.date] = { trades:[], pnl:0 };
+      days[t.date].trades.push(t);
+      days[t.date].pnl += (t.pnl||0);
+    }
+  });
+  return days;
+}
+
+function ratingBand(v){ return v <= 3 ? 'Low (1–3)' : (v <= 6 ? 'Mid (4–6)' : 'High (7–10)'); }
+
+/* ============================================================
+   CHART HELPERS (hand-rolled SVG, no external deps)
+   ============================================================ */
+function svgEquityCurve(points, width, height){
+  width = width || 640; height = height || 220;
+  if (!points.length) return emptyStateHtml('No trades yet', 'Your equity curve will appear here once you log some trades.');
+  const padding = { top:16, right:16, bottom:22, left:64 };
+  const values = points.map(p => p.value);
+  let minV = Math.min(0, ...values), maxV = Math.max(0, ...values);
+  if (minV === maxV){ minV -= 1; maxV += 1; }
+  const range = maxV - minV;
+  const innerW = width - padding.left - padding.right;
+  const innerH = height - padding.top - padding.bottom;
+  const stepX = points.length > 1 ? innerW/(points.length-1) : 0;
+  const coords = points.map((p,i) => {
+    const x = padding.left + i*stepX;
+    const y = padding.top + innerH - ((p.value - minV)/range)*innerH;
+    return [x,y];
+  });
+  const linePath = coords.map((c,i) => (i===0?'M':'L') + c[0].toFixed(1) + ',' + c[1].toFixed(1)).join(' ');
+  const zeroY = padding.top + innerH - ((0 - minV)/range)*innerH;
+  const last = coords[coords.length-1];
+  const first = coords[0];
+  const areaPath = linePath + ' L' + last[0].toFixed(1) + ',' + zeroY.toFixed(1) + ' L' + first[0].toFixed(1) + ',' + zeroY.toFixed(1) + ' Z';
+  const isPositive = values[values.length-1] >= 0;
+  const strokeColor = isPositive ? '#7ecb96' : '#e07d70';
+  const gid = 'eqGrad' + Math.random().toString(36).slice(2,8);
+  let svg = '<svg viewBox="0 0 ' + width + ' ' + height + '" class="equity-svg" preserveAspectRatio="xMidYMid meet">';
+  svg += '<line x1="' + padding.left + '" y1="' + zeroY.toFixed(1) + '" x2="' + (width-padding.right) + '" y2="' + zeroY.toFixed(1) + '" class="zero-line"/>';
+  svg += '<path d="' + areaPath + '" fill="url(#' + gid + ')" opacity="0.3"/>';
+  svg += '<path d="' + linePath + '" fill="none" style="stroke:' + strokeColor + '" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
+  svg += '<text x="6" y="' + (padding.top+4) + '" class="axis-label">' + esc(formatCurrencyShort(maxV)) + '</text>';
+  svg += '<text x="6" y="' + (height-padding.bottom) + '" class="axis-label">' + esc(formatCurrencyShort(minV)) + '</text>';
+  svg += '<defs><linearGradient id="' + gid + '" x1="0" y1="0" x2="0" y2="1">';
+  svg += '<stop offset="0%" style="stop-color:' + strokeColor + ';stop-opacity:0.55"/>';
+  svg += '<stop offset="100%" style="stop-color:' + strokeColor + ';stop-opacity:0"/>';
+  svg += '</linearGradient></defs></svg>';
+  return svg;
+}
+
+function svgDonut(segments, size){
+  size = size || 168;
+  const thickness = 24;
+  const total = segments.reduce((s,x) => s + x.value, 0);
+  const r = (size - thickness) / 2;
+  const cx = size/2, cy = size/2;
+  const circumference = 2 * Math.PI * r;
+  let html = '<div class="donut-wrap">';
+  html += '<svg viewBox="0 0 ' + size + ' ' + size + '" width="' + size + '" height="' + size + '">';
+  if (total === 0){
+    html += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="rgba(237,231,217,0.08)" stroke-width="' + thickness + '"/>';
+  } else {
+    let offset = 0;
+    segments.forEach(seg => {
+      if (seg.value <= 0) return;
+      const frac = seg.value/total;
+      const dash = frac*circumference;
+      const gap = circumference - dash;
+      html += '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" style="stroke:' + seg.color + '" stroke-width="' + thickness + '" stroke-dasharray="' + dash.toFixed(2) + ' ' + gap.toFixed(2) + '" stroke-dashoffset="' + (-offset).toFixed(2) + '" transform="rotate(-90 ' + cx + ' ' + cy + ')"/>';
+      offset += dash;
+    });
+  }
+  html += '<text x="' + cx + '" y="' + (cy-3) + '" text-anchor="middle" class="donut-total">' + total + '</text>';
+  html += '<text x="' + cx + '" y="' + (cy+15) + '" text-anchor="middle" class="donut-label">TRADES</text>';
+  html += '</svg>';
+  html += '<div class="donut-legend">';
+  segments.forEach(seg => {
+    const pct = total ? (seg.value/total*100).toFixed(0) : 0;
+    html += '<div class="donut-legend-item"><span class="donut-legend-dot" style="background:' + seg.color + '"></span>' + esc(seg.label) + ': ' + seg.value + ' (' + pct + '%)</div>';
+  });
+  html += '</div></div>';
+  return html;
+}
+
+function svgSpaghetti(allRuns, startBalance, width, height){
+  width = width || 640; height = height || 260;
+  if (!allRuns.length) return emptyStateHtml('Run a simulation to see projected paths.');
+  const padding = { top:16, right:16, bottom:20, left:70 };
+  const innerW = width - padding.left - padding.right;
+  const innerH = height - padding.top - padding.bottom;
+  const numPoints = allRuns[0].length;
+  let minV = Infinity, maxV = -Infinity;
+  allRuns.forEach(run => run.forEach(v => { if (v<minV) minV=v; if (v>maxV) maxV=v; }));
+  if (minV === maxV){ minV -= 1; maxV += 1; }
+  const range = maxV - minV;
+  const stepX = numPoints > 1 ? innerW/(numPoints-1) : 0;
+  function toPath(run){
+    let d = '';
+    for (let i=0;i<run.length;i++){
+      const x = padding.left + i*stepX;
+      const y = padding.top + innerH - ((run[i]-minV)/range)*innerH;
+      d += (i===0?'M':'L') + x.toFixed(1) + ',' + y.toFixed(1) + ' ';
+    }
+    return d;
+  }
+  const sampleCount = 70;
+  const sampled = allRuns.length > sampleCount ? allRuns.filter((_,i) => i % Math.ceil(allRuns.length/sampleCount) === 0) : allRuns;
+  let svg = '<svg viewBox="0 0 ' + width + ' ' + height + '" class="spaghetti-svg" preserveAspectRatio="xMidYMid meet">';
+  const startY = padding.top + innerH - ((startBalance-minV)/range)*innerH;
+  svg += '<line x1="' + padding.left + '" y1="' + startY.toFixed(1) + '" x2="' + (width-padding.right) + '" y2="' + startY.toFixed(1) + '" class="zero-line"/>';
+  sampled.forEach(run => {
+    svg += '<path d="' + toPath(run) + '" fill="none" style="stroke:#c9a227" stroke-width="1" opacity="0.13"/>';
+  });
+  const avgRun = allRuns[0].map((_,i) => allRuns.reduce((s,r) => s + r[i], 0) / allRuns.length);
+  svg += '<path d="' + toPath(avgRun) + '" fill="none" style="stroke:#e8c766" stroke-width="2.75" stroke-linecap="round"/>';
+  svg += '<text x="6" y="' + (padding.top+4) + '" class="axis-label">' + esc(formatCurrencyShort(maxV)) + '</text>';
+  svg += '<text x="6" y="' + (height-padding.bottom) + '" class="axis-label">' + esc(formatCurrencyShort(minV)) + '</text>';
+  svg += '<text x="' + (padding.left+4) + '" y="' + (startY-5) + '" class="axis-label">start ' + esc(formatCurrencyShort(startBalance)) + '</text>';
+  svg += '</svg>';
+  return svg;
+}
+
+function breakdownRowsHtml(groups){
+  if (!groups.length) return emptyStateHtml('Not enough data yet.');
+  const maxAbsPnl = Math.max(1, ...groups.map(g => Math.abs(g.totalPnl)));
+  return groups.map(g => {
+    const barPct = clamp(Math.abs(g.totalPnl)/maxAbsPnl*100, 0, 100);
+    return '<div class="breakdown-row">' +
+      '<div class="breakdown-label" title="' + esc(g.label) + '">' + esc(g.label) + '</div>' +
+      '<div class="breakdown-count">' + g.count + ' trade' + (g.count!==1?'s':'') + '</div>' +
+      '<div class="breakdown-winrate"><div class="mini-bar-track"><div class="mini-bar-fill" style="width:' + g.winRate.toFixed(0) + '%"></div></div><span>' + g.winRate.toFixed(0) + '%</span></div>' +
+      '<div class="breakdown-pnl-bar"><div class="mini-bar-track"><div class="mini-bar-fill ' + (g.totalPnl>=0?'fill-green':'fill-red') + '" style="width:' + barPct.toFixed(1) + '%"></div></div><span class="' + (g.totalPnl>=0?'text-green':'text-red') + '">' + formatCurrency(g.totalPnl) + '</span></div>' +
+    '</div>';
+  }).join('');
+}
+
+function statCardsHtml(items){
+  return items.map(it => '<div class="stat-card glass"><div class="stat-label">' + esc(it.label) + '</div><div class="stat-value ' + (it.tone?('tone-'+it.tone):'') + '">' + it.value + '</div></div>').join('');
+}
+
+/* ============================================================
+   AMBIENT BACKDROP (decorative candlestick silhouette)
+   ============================================================ */
+function initBackdrop(){
+  const svg = document.getElementById('backdrop-svg');
+  if (!svg) return;
+  const w = 2400, h = 700;
+  svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+  const n = 110;
+  const colW = w/n;
+  let price = h*0.55;
+  let bars = '';
+  for (let i=0;i<n;i++){
+    const wobble = Math.sin(i*0.42)*46 + Math.sin(i*0.17+2)*30 + Math.sin(i*0.91+1)*14;
+    const drift = Math.sin(i*0.05)*70;
+    const open = price;
+    const close = clamp(h*0.55 + wobble*0.5 + drift*0.4, h*0.18, h*0.85);
+    const wickExtra1 = Math.abs(Math.sin(i*1.7))*24 + 6;
+    const wickExtra2 = Math.abs(Math.cos(i*1.3))*24 + 6;
+    const bodyTop = Math.min(open,close);
+    const bodyBottom = Math.max(open,close);
+    const high = bodyTop - wickExtra1;
+    const low = bodyBottom + wickExtra2;
+    const x = i*colW + colW*0.28;
+    const bw = colW*0.44;
+    const bullish = close <= open;
+    const color = bullish ? '201,162,39' : '237,231,217';
+    bars += '<line x1="' + (x+bw/2).toFixed(1) + '" y1="' + high.toFixed(1) + '" x2="' + (x+bw/2).toFixed(1) + '" y2="' + low.toFixed(1) + '" stroke="rgba(' + color + ',0.5)" stroke-width="1.5"/>';
+    bars += '<rect x="' + x.toFixed(1) + '" y="' + bodyTop.toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + Math.max(bodyBottom-bodyTop,2).toFixed(1) + '" fill="rgba(' + color + ',0.16)" stroke="rgba(' + color + ',0.4)" stroke-width="1"/>';
+    price = close;
+  }
+  svg.innerHTML = bars;
+}
+
+/* ============================================================
+   TOAST & MODAL
+   ============================================================ */
+function showToast(message, type){
+  type = type || 'info';
+  const container = document.getElementById('toast-container');
+  if (!container) return;
+  const el = document.createElement('div');
+  el.className = 'toast toast-' + type;
+  el.textContent = message;
+  container.appendChild(el);
+  requestAnimationFrame(() => el.classList.add('show'));
+  setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 300); }, 2800);
+}
+
+function openModal(html, opts){
+  opts = opts || {};
+  const root = document.getElementById('modal-root');
+  root.innerHTML = '<div class="modal-overlay" id="modal-overlay"><div class="modal glass ' + (opts.wide?'modal-wide':'') + '">' + html + '</div></div>';
+  const overlay = document.getElementById('modal-overlay');
+  overlay.addEventListener('click', (e) => { if (e.target.id === 'modal-overlay') closeModal(); });
+  requestAnimationFrame(() => overlay.classList.add('show'));
+}
+function closeModal(){
+  const overlay = document.getElementById('modal-overlay');
+  if (!overlay) return;
+  overlay.classList.remove('show');
+  setTimeout(() => { const root = document.getElementById('modal-root'); if (root) root.innerHTML=''; }, 200);
+}
+function openConfirmModal(message, onConfirm){
+  openModal(
+    '<div class="modal-body"><p>' + esc(message) + '</p>' +
+    '<div class="modal-actions">' +
+    '<button class="btn btn-ghost" id="confirm-cancel">Cancel</button>' +
+    '<button class="btn btn-danger" id="confirm-ok">Delete</button>' +
+    '</div></div>'
+  );
+  document.getElementById('confirm-cancel').addEventListener('click', closeModal);
+  document.getElementById('confirm-ok').addEventListener('click', onConfirm);
+}
+
+function starDisplayHtml(value){
+  let s = '';
+  for (let i=1;i<=10;i++) s += '<span class="star-mini ' + (i<=value?'filled':'') + '">★</span>';
+  return '<div class="star-display">' + s + '<span class="star-num">' + value + '/10</span></div>';
+}
+
+function strategyTagsHtml(strategies, otherText, full){
+  if (!strategies || !strategies.length) return '<span class="text-low">—</span>';
+  const labels = strategies.map(s => (s === 'Other' && otherText) ? otherText : s);
+  const shown = full ? labels : labels.slice(0,2);
+  let html = shown.map(l => '<span class="tag">' + esc(l) + '</span>').join('');
+  if (!full && labels.length > 2) html += '<span class="tag tag-more">+' + (labels.length-2) + '</span>';
+  return html;
+}
+
+/* ============================================================
+   FORM: TRADE ENTRY
+   ============================================================ */
+function syncChipUI(){
+  document.querySelectorAll('[data-chip-group]').forEach(chip => {
+    const group = chip.dataset.chipGroup;
+    const value = chip.dataset.value;
+    if (group === 'strategies'){
+      chip.classList.toggle('selected', formState.strategies.includes(value));
+    } else {
+      chip.classList.toggle('selected', formState[group] === value);
+    }
+  });
+  ['ratingDiscipline','ratingPatience','ratingExecution'].forEach(group => updateStarUI(group, formState[group]));
+  const wrap = document.getElementById('other-strategy-wrap');
+  if (wrap) wrap.classList.toggle('visible', formState.strategies.includes('Other'));
+}
+
+function updateStarUI(group, value){
+  document.querySelectorAll('[data-star-group="' + group + '"]').forEach(star => {
+    star.classList.toggle('filled', parseInt(star.dataset.value,10) <= value);
+  });
+  const label = document.getElementById(group + '-value-label');
+  if (label) label.textContent = value + '/10';
+}
+
+function updateLivePreview(){
+  const entry = parseFloat(document.getElementById('entry-price').value);
+  const sl = parseFloat(document.getElementById('stop-loss').value);
+  const target = parseFloat(document.getElementById('target-price').value);
+  const pnl = parseFloat(document.getElementById('pnl').value);
+  const rr = calcRiskReward(entry, sl, target);
+  const rrEl = document.getElementById('rr-preview');
+  if (rrEl) rrEl.textContent = (rr !== null && !isNaN(rr)) ? ('1 : ' + rr.toFixed(2)) : '—';
+  const resultEl = document.getElementById('result-preview');
+  if (resultEl){
+    if (!isNaN(pnl)){
+      const result = calcResult(pnl, formState.tradeType);
+      resultEl.textContent = result === 'Break Even' ? 'BREAK EVEN' : result.toUpperCase();
+      resultEl.className = 'result-badge ' + (result==='Win'?'badge-win':result==='Loss'?'badge-loss':'badge-be');
+    } else {
+      resultEl.textContent = '—';
+      resultEl.className = 'result-badge';
+    }
+  }
+}
+
+function clearFieldErrors(){
+  document.querySelectorAll('.field-error').forEach(el => el.classList.remove('field-error'));
+}
+function markFieldError(id){
+  const el = document.getElementById(id);
+  if (el) el.classList.add('field-error');
+}
+
+function resetForm(){
+  const form = document.getElementById('trade-form');
+  if (form) form.reset();
+  document.getElementById('trade-date').value = todayStr();
+  document.getElementById('instrument').value = 'XAU/USD';
+  formState = {
+    tradeType:'Buy', strategies:[], setupQuality:'Good', tradingType:'Intraday', marketCondition:'Neutral',
+    emotionBefore:'Calm', emotionDuring:'Calm', emotionAfter:'Satisfied',
+    ratingDiscipline:5, ratingPatience:5, ratingExecution:5
+  };
+  syncChipUI();
+  clearFieldErrors();
+  document.getElementById('form-title').textContent = 'New Trade Entry';
+  document.getElementById('submit-btn').textContent = 'Save Trade';
+  document.getElementById('cancel-edit-btn').style.display = 'none';
+  updateLivePreview();
+}
+
+function getTradeFromForm(){
+  const instrument = document.getElementById('instrument').value.trim();
+  const date = document.getElementById('trade-date').value;
+  const lotSize = parseFloat(document.getElementById('lot-size').value);
+  const entryPrice = parseFloat(document.getElementById('entry-price').value);
+  const exitPrice = parseFloat(document.getElementById('exit-price').value);
+  const stopLoss = parseFloat(document.getElementById('stop-loss').value);
+  const target = parseFloat(document.getElementById('target-price').value);
+  const pnl = parseFloat(document.getElementById('pnl').value);
+  const otherStrategy = document.getElementById('other-strategy-text').value.trim();
+  const entryReason = document.getElementById('entry-reason').value.trim();
+  const exitReason = document.getElementById('exit-reason').value.trim();
+  const mistake = document.getElementById('mistake-notes').value.trim();
+  const keyLearnings = document.getElementById('key-learnings').value.trim();
+
+  const riskReward = calcRiskReward(entryPrice, stopLoss, target);
+  const result = calcResult(pnl, formState.tradeType);
+  const existing = state.editingId ? state.trades.find(t => t.id === state.editingId) : null;
+
+  return {
+    id: state.editingId || uid(),
+    createdAt: existing ? existing.createdAt : new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    instrument, date, tradeType: formState.tradeType, lotSize, entryPrice, exitPrice,
+    strategies: [...formState.strategies], otherStrategy,
+    setupQuality: formState.setupQuality, tradingType: formState.tradingType,
+    stopLoss, target, riskReward, pnl, result,
+    marketCondition: formState.marketCondition,
+    emotionBefore: formState.emotionBefore, emotionDuring: formState.emotionDuring, emotionAfter: formState.emotionAfter,
+    entryReason, exitReason, mistake, keyLearnings,
+    ratingDiscipline: formState.ratingDiscipline, ratingPatience: formState.ratingPatience, ratingExecution: formState.ratingExecution
+  };
+}
+
+function validateTrade(t){
+  const errors = [];
+  if (!t.instrument) errors.push('instrument');
+  if (!t.date) errors.push('trade-date');
+  if (isNaN(t.lotSize) || t.lotSize <= 0) errors.push('lot-size');
+  if (isNaN(t.entryPrice)) errors.push('entry-price');
+  if (isNaN(t.exitPrice)) errors.push('exit-price');
+  if (isNaN(t.stopLoss)) errors.push('stop-loss');
+  if (isNaN(t.target)) errors.push('target-price');
+  if (isNaN(t.pnl)) errors.push('pnl');
+  return errors;
+}
+
+async function handleFormSubmit(e){
+  e.preventDefault();
+  const trade = getTradeFromForm();
+  const errors = validateTrade(trade);
+  clearFieldErrors();
+  if (errors.length){
+    errors.forEach(id => markFieldError(id));
+    showToast('Please fill in the required fields.', 'error');
+    return;
+  }
+  const wasEditing = !!state.editingId;
+  if (wasEditing){
+    const idx = state.trades.findIndex(t => t.id === state.editingId);
+    if (idx > -1) state.trades[idx] = trade; else state.trades.push(trade);
+    state.editingId = null;
+  } else {
+    state.trades.push(trade);
+  }
+  await saveTrades();
+  showToast(wasEditing ? 'Trade updated.' : 'Trade saved.', 'success');
+  resetForm();
+  renderHeaderStats();
+  switchTab('history');
+}
+
+function openEditTrade(id){
+  const trade = state.trades.find(t => t.id === id);
+  if (!trade) return;
+  state.editingId = id;
+  switchTab('entry');
+  document.getElementById('instrument').value = trade.instrument;
+  document.getElementById('trade-date').value = trade.date;
+  document.getElementById('lot-size').value = trade.lotSize;
+  document.getElementById('entry-price').value = trade.entryPrice;
+  document.getElementById('exit-price').value = trade.exitPrice;
+  document.getElementById('stop-loss').value = trade.stopLoss;
+  document.getElementById('target-price').value = trade.target;
+  document.getElementById('pnl').value = trade.pnl;
+  document.getElementById('other-strategy-text').value = trade.otherStrategy || '';
+  document.getElementById('entry-reason').value = trade.entryReason || '';
+  document.getElementById('exit-reason').value = trade.exitReason || '';
+  document.getElementById('mistake-notes').value = trade.mistake || '';
+  document.getElementById('key-learnings').value = trade.keyLearnings || '';
+  formState = {
+    tradeType: trade.tradeType, strategies: [...trade.strategies],
+    setupQuality: trade.setupQuality, tradingType: trade.tradingType, marketCondition: trade.marketCondition,
+    emotionBefore: trade.emotionBefore, emotionDuring: trade.emotionDuring, emotionAfter: trade.emotionAfter,
+    ratingDiscipline: trade.ratingDiscipline, ratingPatience: trade.ratingPatience, ratingExecution: trade.ratingExecution
+  };
+  syncChipUI();
+  clearFieldErrors();
+  updateLivePreview();
+  document.getElementById('form-title').textContent = 'Edit Trade';
+  document.getElementById('submit-btn').textContent = 'Update Trade';
+  document.getElementById('cancel-edit-btn').style.display = 'inline-flex';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function cancelEdit(){
+  state.editingId = null;
+  resetForm();
+}
+
+/* ============================================================
+   TRADE HISTORY
+   ============================================================ */
+function populateStrategyFilterOptions(){
+  const sel = document.getElementById('filter-strategy');
+  if (!sel || sel.dataset.populated) return;
+  STRATEGIES.forEach(s => {
+    const opt = document.createElement('option');
+    opt.value = s; opt.textContent = s;
+    sel.appendChild(opt);
+  });
+  sel.dataset.populated = '1';
+}
+
+function getFilteredTrades(){
+  let list = [...state.trades];
+  const f = state.historyFilters;
+  if (f.search){
+    const q = f.search.toLowerCase();
+    list = list.filter(t =>
+      (t.instrument||'').toLowerCase().includes(q) ||
+      (t.entryReason||'').toLowerCase().includes(q) ||
+      (t.exitReason||'').toLowerCase().includes(q) ||
+      (t.mistake||'').toLowerCase().includes(q) ||
+      (t.keyLearnings||'').toLowerCase().includes(q) ||
+      (t.otherStrategy||'').toLowerCase().includes(q)
+    );
+  }
+  if (f.result !== 'all') list = list.filter(t => t.result === f.result);
+  if (f.strategy !== 'all') list = list.filter(t => t.strategies.includes(f.strategy));
+  if (f.type !== 'all') list = list.filter(t => t.tradeType === f.type);
+  if (f.from) list = list.filter(t => t.date >= f.from);
+  if (f.to) list = list.filter(t => t.date <= f.to);
+
+  list.sort((a,b) => {
+    let av, bv;
+    if (f.sortBy === 'date'){ av = tradeSortKey(a); bv = tradeSortKey(b); }
+    else if (f.sortBy === 'instrument'){ av = (a.instrument||'').toLowerCase(); bv = (b.instrument||'').toLowerCase(); }
+    else { av = a[f.sortBy]; bv = b[f.sortBy]; if (av===null||av===undefined||isNaN(av)) av=-Infinity; if (bv===null||bv===undefined||isNaN(bv)) bv=-Infinity; }
+    if (av < bv) return f.sortDir === 'asc' ? -1 : 1;
+    if (av > bv) return f.sortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+  return list;
+}
+
+function historyRowHtml(t){
+  const typeClass = t.tradeType.replace(/\s/g,'');
+  const qualityClass = t.setupQuality;
+  const resultClass = t.result.replace(/\s/g,'');
+  return '<tr data-id="' + t.id + '">' +
+    '<td class="mono">' + formatDateShort(t.date) + '</td>' +
+    '<td class="mono">' + esc(t.instrument) + '</td>' +
+    '<td><span class="badge badge-type-' + typeClass + '">' + esc(t.tradeType) + '</span></td>' +
+    '<td class="mono">' + t.lotSize + '</td>' +
+    '<td class="mono">' + (t.riskReward !== null && t.riskReward !== undefined ? '1:' + t.riskReward.toFixed(2) : '—') + '</td>' +
+    '<td>' + strategyTagsHtml(t.strategies, t.otherStrategy) + '</td>' +
+    '<td><span class="badge badge-quality-' + qualityClass + '">' + esc(t.setupQuality) + '</span></td>' +
+    '<td class="mono ' + (t.pnl>0?'text-green':t.pnl<0?'text-red':'') + '">' + formatCurrency(t.pnl) + '</td>' +
+    '<td><span class="badge badge-result-' + resultClass + '">' + esc(t.result) + '</span></td>' +
+    '<td class="actions-cell">' +
+      '<button class="icon-btn" data-action="view" title="View">' + ICONS.eye + '</button>' +
+      '<button class="icon-btn" data-action="edit" title="Edit">' + ICONS.pencil + '</button>' +
+      '<button class="icon-btn icon-btn-danger" data-action="delete" title="Delete">' + ICONS.trash + '</button>' +
+    '</td></tr>';
+}
+
+function renderHistoryTab(){
+  const overview = computeOverview(state.trades);
+  document.getElementById('history-summary-chips').innerHTML =
+    '<div class="stat-pill"><span>Total Trades</span><strong>' + overview.total + '</strong></div>' +
+    '<div class="stat-pill"><span>Win Rate</span><strong>' + (overview.total ? overview.winRate.toFixed(1)+'%' : '—') + '</strong></div>' +
+    '<div class="stat-pill"><span>Total P/L</span><strong style="color:' + (overview.totalPnl>=0?'var(--green-bright)':'var(--red-bright)') + '">' + formatCurrency(overview.totalPnl) + '</strong></div>' +
+    '<div class="stat-pill"><span>Avg R:R</span><strong>1:' + overview.avgRR.toFixed(2) + '</strong></div>';
+
+  const filtered = getFilteredTrades();
+  const tbody = document.getElementById('history-tbody');
+  const emptyEl = document.getElementById('history-empty');
+  if (!filtered.length){
+    tbody.innerHTML = '';
+    emptyEl.style.display = 'block';
+    if (state.trades.length){
+      emptyEl.innerHTML = '<strong>No matches</strong>No trades match your current filters.';
+    } else {
+      emptyEl.innerHTML = '<svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18.7 8 13 13.7l-4-4L3.7 16"/></svg><strong>No trades yet</strong>Log your first trade in the Entry tab to start building your edge.';
+    }
+  } else {
+    emptyEl.style.display = 'none';
+    tbody.innerHTML = filtered.map(historyRowHtml).join('');
+  }
+
+  document.querySelectorAll('.history-table thead th[data-sort]').forEach(th => {
+    th.textContent = th.textContent.replace(/ [▲▼]$/, '');
+    if (th.dataset.sort === state.historyFilters.sortBy){
+      th.textContent += state.historyFilters.sortDir === 'asc' ? ' ▲' : ' ▼';
+    }
+  });
+}
+
+function openTradeDetailModal(id){
+  const t = state.trades.find(x => x.id === id);
+  if (!t) return;
+  const resultClass = t.result.replace(/\s/g,'');
+  let html = '<div class="modal-header"><h3>' + esc(t.instrument) + ' — ' + formatDateLong(t.date) + '</h3><span class="badge badge-result-' + resultClass + '">' + esc(t.result) + '</span></div>';
+  html += '<div class="modal-body detail-body">';
+  html += '<div class="detail-grid">';
+  html += '<div class="detail-item"><span>Type</span><strong>' + esc(t.tradeType) + '</strong></div>';
+  html += '<div class="detail-item"><span>Lot Size</span><strong class="mono">' + t.lotSize + '</strong></div>';
+  html += '<div class="detail-item"><span>Entry</span><strong class="mono">' + t.entryPrice + '</strong></div>';
+  html += '<div class="detail-item"><span>Exit</span><strong class="mono">' + t.exitPrice + '</strong></div>';
+  html += '<div class="detail-item"><span>Stop Loss</span><strong class="mono">' + t.stopLoss + '</strong></div>';
+  html += '<div class="detail-item"><span>Target</span><strong class="mono">' + t.target + '</strong></div>';
+  html += '<div class="detail-item"><span>Risk:Reward</span><strong class="mono">' + (t.riskReward!=null ? '1:'+t.riskReward.toFixed(2) : '—') + '</strong></div>';
+  html += '<div class="detail-item"><span>P/L</span><strong class="mono" style="color:' + (t.pnl>=0?'var(--green-bright)':'var(--red-bright)') + '">' + formatCurrency(t.pnl) + '</strong></div>';
+  html += '<div class="detail-item"><span>Setup Quality</span><strong>' + esc(t.setupQuality) + '</strong></div>';
+  html += '<div class="detail-item"><span>Trading Type</span><strong>' + esc(t.tradingType) + '</strong></div>';
+  html += '<div class="detail-item"><span>Market Condition</span><strong>' + esc(t.marketCondition) + '</strong></div>';
+  html += '</div>';
+  html += '<div class="detail-tags"><span>Strategies:</span> ' + strategyTagsHtml(t.strategies, t.otherStrategy, true) + '</div>';
+  html += '<div class="detail-emotions"><div><span>Before</span><strong>' + esc(t.emotionBefore) + '</strong></div><div><span>During</span><strong>' + esc(t.emotionDuring) + '</strong></div><div><span>After</span><strong>' + esc(t.emotionAfter) + '</strong></div></div>';
+  html += '<div class="detail-ratings"><div><span>Discipline</span>' + starDisplayHtml(t.ratingDiscipline) + '</div><div><span>Patience</span>' + starDisplayHtml(t.ratingPatience) + '</div><div><span>Execution</span>' + starDisplayHtml(t.ratingExecution) + '</div></div>';
+  if (t.entryReason) html += '<div class="detail-note"><span>Entry Reason</span><p>' + esc(t.entryReason) + '</p></div>';
+  if (t.exitReason) html += '<div class="detail-note"><span>Exit Reason</span><p>' + esc(t.exitReason) + '</p></div>';
+  if (t.mistake) html += '<div class="detail-note"><span>Mistakes</span><p>' + esc(t.mistake) + '</p></div>';
+  if (t.keyLearnings) html += '<div class="detail-note"><span>Key Learnings</span><p>' + esc(t.keyLearnings) + '</p></div>';
+  html += '<div class="modal-actions"><button class="btn btn-ghost" id="detail-close">Close</button><button class="btn btn-secondary" id="detail-edit">Edit Trade</button><button class="btn btn-danger" id="detail-delete">Delete</button></div>';
+  html += '</div>';
+  openModal(html, {wide:true});
+  document.getElementById('detail-close').addEventListener('click', closeModal);
+  document.getElementById('detail-edit').addEventListener('click', () => { closeModal(); openEditTrade(id); });
+  document.getElementById('detail-delete').addEventListener('click', () => { closeModal(); confirmDeleteTrade(id); });
+}
+
+function confirmDeleteTrade(id){
+  const trade = state.trades.find(t => t.id === id);
+  if (!trade) return;
+  openConfirmModal('Delete this ' + trade.instrument + ' trade from ' + formatDateShort(trade.date) + '? This can\'t be undone.', async () => {
+    state.trades = state.trades.filter(t => t.id !== id);
+    await saveTrades();
+    closeModal();
+    showToast('Trade deleted.', 'success');
+    renderHistoryTab();
+    renderHeaderStats();
+  });
+}
+
+/* ============================================================
+   ICONS (inline SVG set)
+   ============================================================ */
+const ICONS = {
+  eye: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>',
+  pencil: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>',
+  trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>'
+};
+
+/* ============================================================
+   CALENDAR
+   ============================================================ */
+function dayCellHtml(opts){
+  if (opts.muted) return '<div class="day-cell muted"><span class="day-num">' + opts.dayNum + '</span></div>';
+  const hasTrades = opts.dayData && opts.dayData.trades.length > 0;
+  let pnlClass = '';
+  if (hasTrades){
+    pnlClass = opts.dayData.pnl > 0 ? 'day-green' : (opts.dayData.pnl < 0 ? 'day-red' : 'day-neutral');
+  }
+  let html = '<div class="day-cell ' + pnlClass + ' ' + (opts.isToday?'today':'') + '"' + (hasTrades ? ' data-date="' + opts.dateStr + '"' : '') + '>';
+  html += '<span class="day-num">' + opts.dayNum + '</span>';
+  if (hasTrades){
+    html += '<span class="day-pnl">' + formatCurrencyShort(opts.dayData.pnl) + '</span>';
+    html += '<span class="day-count">' + opts.dayData.trades.length + ' trade' + (opts.dayData.trades.length>1?'s':'') + '</span>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function renderCalendarTab(){
+  const {year, month} = state.calendar;
+  document.getElementById('cal-month-label').textContent = MONTH_NAMES[month] + ' ' + year;
+  const monthData = computeMonthData(year, month);
+
+  let totalTrades=0, wins=0, losses=0, monthPnl=0, greenDays=0, redDays=0;
+  Object.values(monthData).forEach(day => {
+    totalTrades += day.trades.length;
+    day.trades.forEach(t => { if (t.result==='Win') wins++; else if (t.result==='Loss') losses++; });
+    monthPnl += day.pnl;
+    if (day.pnl > 0) greenDays++; else if (day.pnl < 0) redDays++;
+  });
+
+  document.getElementById('calendar-stats').innerHTML = statCardsHtml([
+    { label:'Total Trades', value: totalTrades },
+    { label:'Winning Trades', value: wins, tone:'green' },
+    { label:'Losing Trades', value: losses, tone:'red' },
+    { label:'Monthly P/L', value: formatCurrency(monthPnl), tone: monthPnl>=0?'green':'red' },
+    { label:'Green Days', value: greenDays, tone:'green' },
+    { label:'Red Days', value: redDays, tone:'red' }
+  ]);
+
+  const firstDow = firstDayOfWeek(year, month);
+  const numDays = daysInMonth(year, month);
+  const prevMonthDays = daysInMonth(year, month-1);
+  const today = todayStr();
+
+  let cells = [];
+  for (let i=0;i<firstDow;i++){
+    cells.push(dayCellHtml({ dayNum: prevMonthDays - firstDow + i + 1, muted:true }));
+  }
+  for (let d=1; d<=numDays; d++){
+    const dateStr = isoDate(year, month, d);
+    cells.push(dayCellHtml({ dayNum:d, dateStr, dayData: monthData[dateStr], isToday: dateStr===today }));
+  }
+  const remainder = cells.length % 7;
+  if (remainder !== 0){
+    const trailing = 7 - remainder;
+    for (let i=1;i<=trailing;i++) cells.push(dayCellHtml({ dayNum:i, muted:true }));
+  }
+  document.getElementById('calendar-grid').innerHTML = cells.join('');
+  document.getElementById('day-detail-panel').classList.remove('visible');
+}
+
+function changeMonth(delta){
+  state.calendar.month += delta;
+  if (state.calendar.month < 0){ state.calendar.month = 11; state.calendar.year--; }
+  if (state.calendar.month > 11){ state.calendar.month = 0; state.calendar.year++; }
+  renderCalendarTab();
+}
+
+function showDayTrades(dateStr){
+  const monthData = computeMonthData(state.calendar.year, state.calendar.month);
+  const dayData = monthData[dateStr];
+  const panel = document.getElementById('day-detail-panel');
+  if (!dayData || !dayData.trades.length){ panel.classList.remove('visible'); return; }
+  let html = '<div class="day-detail-header"><h4>' + formatDateLong(dateStr) + '</h4><span class="mono" style="color:' + (dayData.pnl>=0?'var(--green-bright)':'var(--red-bright)') + '">' + formatCurrency(dayData.pnl) + '</span></div>';
+  dayData.trades.forEach(t => {
+    html += '<div class="day-trade-item" data-id="' + t.id + '"><span>' + esc(t.instrument) + ' · ' + esc(t.tradeType) + '</span><span class="mono ' + (t.pnl>0?'text-green':t.pnl<0?'text-red':'') + '">' + formatCurrency(t.pnl) + '</span></div>';
+  });
+  panel.innerHTML = html;
+  panel.classList.add('visible');
+}
+
+/* ============================================================
+   ANALYTICS
+   ============================================================ */
+function renderAnalyticsTab(){
+  const trades = state.trades;
+  if (!trades.length){
+    document.getElementById('analytics-overview').innerHTML = '';
+    const msg = emptyStateHtml('No trades yet', 'Log a few trades and your analytics will build themselves here.');
+    ['equity-chart-container','donut-chart-container','strategy-breakdown','quality-breakdown','tradingtype-breakdown','condition-breakdown','psych-breakdown','rating-breakdown','dow-breakdown'].forEach(id => {
+      document.getElementById(id).innerHTML = msg;
+    });
+    return;
+  }
+
+  const ov = computeOverview(trades);
+  document.getElementById('analytics-overview').innerHTML = statCardsHtml([
+    { label:'Total Trades', value: ov.total },
+    { label:'Win Rate', value: ov.winRate.toFixed(1)+'%', tone: ov.winRate>=50?'green':'red' },
+    { label:'Total P/L', value: formatCurrency(ov.totalPnl), tone: ov.totalPnl>=0?'green':'red' },
+    { label:'Profit Factor', value: isFinite(ov.profitFactor) ? ov.profitFactor.toFixed(2) : '∞' },
+    { label:'Avg Win', value: formatCurrency(ov.avgWin), tone:'green' },
+    { label:'Avg Loss', value: formatCurrency(-ov.avgLoss), tone:'red' },
+    { label:'Avg R:R', value: '1:'+ov.avgRR.toFixed(2) },
+    { label:'Best Trade', value: formatCurrency(ov.bestTrade), tone:'green' },
+    { label:'Worst Trade', value: formatCurrency(ov.worstTrade), tone:'red' },
+    { label:'Current Streak', value: ov.streak ? (ov.streak + ' ' + ov.streakType) : '—', tone: ov.streakType==='Win'?'green':(ov.streakType==='Loss'?'red':null) }
+  ]);
+
+  document.getElementById('equity-chart-container').innerHTML = svgEquityCurve(computeEquityCurve(trades));
+
+  document.getElementById('donut-chart-container').innerHTML = svgDonut([
+    { label:'Wins', value: ov.winsCount, color:'#5aab74' },
+    { label:'Losses', value: ov.lossesCount, color:'#c1584d' },
+    { label:'Break Even', value: ov.beCount, color:'#a39c8e' }
+  ]);
+
+  document.getElementById('strategy-breakdown').innerHTML = breakdownRowsHtml(
+    computeGroupStats(trades, t => t.strategies.length ? t.strategies.map(s => (s==='Other' && t.otherStrategy) ? t.otherStrategy : s) : [])
+  );
+  document.getElementById('quality-breakdown').innerHTML = breakdownRowsHtml(computeGroupStats(trades, t => t.setupQuality));
+  document.getElementById('tradingtype-breakdown').innerHTML = breakdownRowsHtml(computeGroupStats(trades, t => t.tradingType));
+  document.getElementById('condition-breakdown').innerHTML = breakdownRowsHtml(computeGroupStats(trades, t => t.marketCondition));
+
+  renderPsychBreakdown();
+
+  const ratingGroups = [
+    { key:'ratingDiscipline', label:'Discipline' },
+    { key:'ratingPatience', label:'Patience' },
+    { key:'ratingExecution', label:'Execution' }
+  ];
+  document.getElementById('rating-breakdown').innerHTML = ratingGroups.map(rg => {
+    const stats = computeGroupStats(trades, t => ratingBand(t[rg.key]));
+    const order = ['Low (1–3)','Mid (4–6)','High (7–10)'];
+    stats.sort((a,b) => order.indexOf(a.label) - order.indexOf(b.label));
+    return '<div class="breakdown-card" style="padding:0;border:none;background:none;box-shadow:none;backdrop-filter:none;"><h3 style="font-size:13.5px;">' + rg.label + '</h3>' + breakdownRowsHtml(stats) + '</div>';
+  }).join('');
+
+  const dowStats = computeGroupStats(trades, t => DOW_NAMES[dayOfWeekFromISO(t.date)]);
+  const dowOrder = DOW_NAMES;
+  dowStats.sort((a,b) => dowOrder.indexOf(a.label) - dowOrder.indexOf(b.label));
+  document.getElementById('dow-breakdown').innerHTML = breakdownRowsHtml(dowStats);
+}
+
+function renderPsychBreakdown(){
+  const field = state.activePsych;
+  document.getElementById('psych-breakdown').innerHTML = breakdownRowsHtml(computeGroupStats(state.trades, t => t[field]));
+}
+
+/* ============================================================
+   SIMULATION (Monte Carlo)
+   ============================================================ */
+function setSimMode(mode){
+  state.simMode = mode;
+  document.querySelectorAll('[data-sim-mode]').forEach(b => b.classList.toggle('selected', b.dataset.simMode === mode));
+  const summaryEl = document.getElementById('sim-history-summary');
+  if (mode === 'history'){
+    const stats = computeOverview(state.trades);
+    if (state.trades.length < 5){
+      summaryEl.innerHTML = '<div class="sim-summary-line">Log at least 5 trades to simulate from your real history. Using reasonable defaults for now — feel free to adjust.</div>';
+    } else {
+      summaryEl.innerHTML = '<div class="sim-summary-line">Based on <strong>' + stats.total + '</strong> logged trades — Win Rate <strong>' + stats.winRate.toFixed(1) + '%</strong>, Avg R:R <strong>1:' + stats.avgRR.toFixed(2) + '</strong></div>';
+      document.getElementById('sim-winrate').value = stats.winRate.toFixed(1);
+      document.getElementById('sim-rr').value = stats.avgRR > 0 ? stats.avgRR.toFixed(2) : '2';
+    }
+  } else {
+    summaryEl.innerHTML = '<div class="sim-summary-line">Enter your own assumptions to model a hypothetical strategy.</div>';
+  }
+}
+
+function runMonteCarlo(params){
+  const wr = params.winRate/100;
+  const risk = params.riskPct/100;
+  const allRuns = [];
+  const finals = [];
+  const maxDrawdowns = [];
+  for (let r=0; r<params.numRuns; r++){
+    let bal = params.balance;
+    let peak = params.balance;
+    let maxDD = 0;
+    const curve = [bal];
+    for (let i=0; i<params.numTrades; i++){
+      const win = Math.random() < wr;
+      if (win) bal += bal * risk * params.rr;
+      else bal -= bal * risk;
+      bal = Math.max(bal, 0);
+      peak = Math.max(peak, bal);
+      const dd = peak > 0 ? (peak - bal) / peak * 100 : 0;
+      if (dd > maxDD) maxDD = dd;
+      curve.push(bal);
+    }
+    allRuns.push(curve);
+    finals.push(bal);
+    maxDrawdowns.push(maxDD);
+  }
+  const sortedFinals = [...finals].sort((a,b) => a-b);
+  const avgFinal = sortedFinals.reduce((s,v) => s+v, 0) / sortedFinals.length;
+  const median = sortedFinals[Math.floor(sortedFinals.length/2)];
+  const best = sortedFinals[sortedFinals.length-1];
+  const worst = sortedFinals[0];
+  const probProfit = sortedFinals.filter(f => f > params.balance).length / sortedFinals.length * 100;
+  const probRuin = sortedFinals.filter(f => f <= params.balance*0.5).length / sortedFinals.length * 100;
+  const avgMaxDD = maxDrawdowns.reduce((s,v) => s+v, 0) / maxDrawdowns.length;
+  const worstMaxDD = Math.max(...maxDrawdowns);
+  return { allRuns, stats: { avgFinal, median, best, worst, probProfit, probRuin, avgMaxDD, worstMaxDD, startBalance: params.balance } };
+}
+
+function renderSimResults(result){
+  document.getElementById('sim-results').style.display = 'block';
+  const s = result.stats;
+  document.getElementById('sim-stats').innerHTML = statCardsHtml([
+    { label:'Average Final Balance', value: formatCurrency(s.avgFinal) },
+    { label:'Median Final Balance', value: formatCurrency(s.median) },
+    { label:'Best Case', value: formatCurrency(s.best), tone:'green' },
+    { label:'Worst Case', value: formatCurrency(s.worst), tone:'red' },
+    { label:'Probability of Profit', value: s.probProfit.toFixed(1)+'%', tone: s.probProfit>=50?'green':'red' },
+    { label:'Risk of Ruin (−50%)', value: s.probRuin.toFixed(1)+'%', tone: s.probRuin>10?'red':'green' },
+    { label:'Avg Max Drawdown', value: s.avgMaxDD.toFixed(1)+'%' },
+    { label:'Worst Max Drawdown', value: s.worstMaxDD.toFixed(1)+'%', tone:'red' }
+  ]);
+  document.getElementById('sim-chart-container').innerHTML = svgSpaghetti(result.allRuns, s.startBalance);
+}
+
+function handleRunSimulation(){
+  const winRate = parseFloat(document.getElementById('sim-winrate').value);
+  const rr = parseFloat(document.getElementById('sim-rr').value);
+  const balance = parseFloat(document.getElementById('sim-balance').value);
+  const riskPct = parseFloat(document.getElementById('sim-risk').value);
+  const numTrades = parseInt(document.getElementById('sim-numtrades').value, 10);
+  const numRuns = parseInt(document.getElementById('sim-numruns').value, 10);
+  if ([winRate,rr,balance,riskPct,numTrades,numRuns].some(v => isNaN(v)) || balance<=0 || numTrades<=0 || numRuns<=0){
+    showToast('Please check your simulation inputs.', 'error');
+    return;
+  }
+  const result = runMonteCarlo({ winRate, rr, balance, riskPct, numTrades, numRuns });
+  renderSimResults(result);
+}
+
+/* ============================================================
+   EXPORT / IMPORT
+   ============================================================ */
+function exportData(){
+  const dataStr = JSON.stringify(state.trades, null, 2);
+  const blob = new Blob([dataStr], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = filename;
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  a.href = url;
+  a.download = 'trade-journal-export-' + todayStr() + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
   URL.revokeObjectURL(url);
+  showToast('Exported ' + state.trades.length + ' trade' + (state.trades.length!==1?'s':'') + '.', 'success');
 }
-function exportTrades(){
-  const payload = { exportedAt:new Date().toISOString(), count:trades.length, trades:trades };
-  downloadFile('trade-journal-backup-'+todayStr()+'.json', JSON.stringify(payload,null,2));
-  showToast('success','Exported '+trades.length+' trade'+(trades.length===1?'':'s'));
-}
-function importTradesFromFile(file){
+
+function importData(file){
+  if (!file) return;
   const reader = new FileReader();
-  reader.onload = function(e){
-    try{
-      const data = JSON.parse(e.target.result);
-      const incoming = Array.isArray(data) ? data : (Array.isArray(data.trades) ? data.trades : null);
-      if(!incoming) throw new Error('bad format');
-      openConfirm('Replace current data?', 'This will replace your current '+trades.length+' trade(s) with '+incoming.length+' trade(s) from the file. Export a backup first if unsure.', async function(){
-        trades = incoming;
-        await persistTrades();
-        refreshAll();
-        showToast('success','Imported '+incoming.length+' trades');
+  reader.onload = async (e) => {
+    try {
+      const imported = JSON.parse(e.target.result);
+      if (!Array.isArray(imported)) throw new Error('Invalid format');
+      const existingIds = new Set(state.trades.map(t => t.id));
+      let added = 0;
+      imported.forEach(t => {
+        if (t && t.id && !existingIds.has(t.id)){
+          state.trades.push(t);
+          existingIds.add(t.id);
+          added++;
+        }
       });
-    }catch(err){
-      showToast('error','Could not read that file — is it a Trade Journal export?');
+      await saveTrades();
+      renderHeaderStats();
+      if (state.activeTab === 'history') renderHistoryTab();
+      showToast('Imported ' + added + ' new trade' + (added!==1?'s':'') + '.', 'success');
+    } catch (err){
+      showToast('Import failed — the file isn\'t a valid export.', 'error');
     }
   };
   reader.readAsText(file);
 }
 
-/* =========================================================
-   SECTION: METRICS CALC
-   ========================================================= */
-function computeTradeMetrics(t){
-  const pipSize = (t.pipSize && t.pipSize>0) ? t.pipSize : 0.10;
-  const dpp = (t.dollarPerPip && t.dollarPerPip>0) ? t.dollarPerPip : 10;
-  const lots = t.lots || 0;
-  let riskPips=null, rewardPips=null, rr=null, dollarRisk=null, dollarReward=null;
-
-  if(t.entry!=null && t.sl!=null){
-    riskPips = Math.abs(t.entry - t.sl)/pipSize;
-    dollarRisk = riskPips * lots * dpp;
-  }
-  if(t.entry!=null && t.target!=null){
-    rewardPips = Math.abs(t.target - t.entry)/pipSize;
-    dollarReward = rewardPips * lots * dpp;
-  }
-  if(riskPips && rewardPips && riskPips>0){
-    rr = rewardPips/riskPips;
-  }
-
-  let pnl = null;
-  if(t.pnlOverride!=null && t.pnlOverride!==''){
-    pnl = Number(t.pnlOverride);
-  } else if(t.type === 'Break Even'){
-    pnl = 0;
-  } else if(t.entry!=null && t.exit!=null){
-    const dir = t.type === 'Sell' ? -1 : 1;
-    const priceDiff = (t.exit - t.entry) * dir;
-    pnl = (priceDiff/pipSize) * lots * dpp;
-  }
-
-  let realizedR = null;
-  if(pnl!=null && dollarRisk){ realizedR = pnl/dollarRisk; }
-
-  let outcome = 'open';
-  if(t.status==='Closed' || t.exit!=null || t.type==='Break Even'){
-    if(pnl===null) outcome = 'open';
-    else if(Math.abs(pnl) < 0.01) outcome = 'breakeven';
-    else outcome = pnl>0 ? 'win' : 'loss';
-  }
-
-  return { riskPips, rewardPips, rr, dollarRisk, dollarReward, pnl, realizedR, outcome, pipSize, dollarPerPip:dpp };
-}
-function isClosed(t){
-  const m = computeTradeMetrics(t);
-  return m.outcome==='win' || m.outcome==='loss' || m.outcome==='breakeven';
+/* ============================================================
+   HEADER STATS & TAB SWITCHING
+   ============================================================ */
+function renderHeaderStats(){
+  const stats = computeOverview(state.trades);
+  document.getElementById('header-stats').innerHTML =
+    '<div class="hstat"><span class="hstat-label">Trades</span><span class="hstat-value">' + stats.total + '</span></div>' +
+    '<div class="hstat"><span class="hstat-label">Win Rate</span><span class="hstat-value">' + (stats.total ? stats.winRate.toFixed(1)+'%' : '—') + '</span></div>' +
+    '<div class="hstat"><span class="hstat-label">Total P/L</span><span class="hstat-value" style="color:' + (stats.totalPnl>=0?'var(--green-bright)':'var(--red-bright)') + '">' + formatCurrency(stats.totalPnl) + '</span></div>';
 }
 
-/* =========================================================
-   SECTION: TOAST
-   ========================================================= */
-function showToast(type,msg){
-  const container = document.getElementById('toastContainer');
-  const el = document.createElement('div');
-  el.className = 'toast '+type;
-  const icons = {
-    success:'<svg viewBox="0 0 24 24" fill="none"><path d="M5 12L10 17L20 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-    error:'<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 8V13M12 16H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
-    info:'<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 11V16M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
-  };
-  el.innerHTML = (icons[type]||icons.info) + '<span>'+escapeHtml(msg)+'</span>';
-  container.appendChild(el);
-  setTimeout(()=>{ el.style.opacity='0'; el.style.transition='opacity .3s'; setTimeout(()=>el.remove(),300); }, 3200);
-}
-
-/* =========================================================
-   SECTION: MODALS (generic)
-   ========================================================= */
-function openModal(id){ document.getElementById(id).classList.add('show'); }
-function closeModal(id){ document.getElementById(id).classList.remove('show'); }
-function openConfirm(title, text, onConfirm){
-  document.getElementById('confirmModalTitle').textContent = title;
-  document.getElementById('confirmModalText').textContent = text;
-  confirmCallback = onConfirm;
-  openModal('confirmModal');
-}
-
-/* =========================================================
-   SECTION: TAB SWITCHING
-   ========================================================= */
-function initTabs(){
-  document.querySelectorAll('.tab-btn').forEach(btn=>{
-    btn.addEventListener('click', ()=> switchTab(btn.dataset.tab));
-  });
-}
 function switchTab(tab){
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
-  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active', p.id==='panel-'+tab));
+  state.activeTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + tab));
+  if (tab === 'history') renderHistoryTab();
+  if (tab === 'calendar') renderCalendarTab();
+  if (tab === 'analytics') renderAnalyticsTab();
+  if (tab === 'simulation' && !document.getElementById('sim-history-summary').innerHTML) setSimMode('history');
+  if (tab === 'entry' && !state.editingId){
+    const d = document.getElementById('trade-date');
+    if (!d.value) d.value = todayStr();
+  }
 }
 
-/* =========================================================
-   SECTION: PILL GROUPS & STAR RATINGS (generic)
-   ========================================================= */
-function initPillGroups(scope){
-  (scope||document).querySelectorAll('.pill-group').forEach(group=>{
-    const multi = group.dataset.multi === 'true';
-    group.querySelectorAll('.pill').forEach(pill=>{
-      pill.addEventListener('click', ()=>{
-        if(multi){
-          pill.classList.toggle('active');
-        } else {
-          group.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
-          pill.classList.add('active');
-        }
-        group.dispatchEvent(new CustomEvent('pillchange'));
-      });
+/* ============================================================
+   EVENT LISTENERS
+   ============================================================ */
+function attachAllListeners(){
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+  });
+
+  // Trade form submit / cancel
+  document.getElementById('trade-form').addEventListener('submit', handleFormSubmit);
+  document.getElementById('cancel-edit-btn').addEventListener('click', cancelEdit);
+  document.getElementById('new-trade-btn').addEventListener('click', () => { cancelEdit(); switchTab('entry'); });
+
+  // Chip / strategy-card / star delegation (scoped to the trade form)
+  document.getElementById('trade-form').addEventListener('click', (e) => {
+    const chip = e.target.closest('[data-chip-group]');
+    if (chip){
+      const group = chip.dataset.chipGroup;
+      const value = chip.dataset.value;
+      if (group === 'strategies'){
+        const idx = formState.strategies.indexOf(value);
+        if (idx > -1) formState.strategies.splice(idx,1); else formState.strategies.push(value);
+        chip.classList.toggle('selected', formState.strategies.includes(value));
+        document.getElementById('other-strategy-wrap').classList.toggle('visible', formState.strategies.includes('Other'));
+      } else {
+        formState[group] = value;
+        document.querySelectorAll('[data-chip-group="' + group + '"]').forEach(c => c.classList.remove('selected'));
+        chip.classList.add('selected');
+        if (group === 'tradeType') updateLivePreview();
+      }
+      return;
+    }
+    const star = e.target.closest('[data-star-group]');
+    if (star){
+      const group = star.dataset.starGroup;
+      const value = parseInt(star.dataset.value, 10);
+      formState[group] = value;
+      updateStarUI(group, value);
+    }
+  });
+
+  // Live preview recalculation
+  ['entry-price','stop-loss','target-price','pnl'].forEach(id => {
+    document.getElementById(id).addEventListener('input', updateLivePreview);
+  });
+
+  // History filters
+  const debounceSearch = (() => {
+    let t;
+    return (fn, wait) => { clearTimeout(t); t = setTimeout(fn, wait); };
+  })();
+  document.getElementById('filter-search').addEventListener('input', (e) => {
+    const val = e.target.value;
+    debounceSearch(() => { state.historyFilters.search = val; renderHistoryTab(); }, 200);
+  });
+  document.getElementById('filter-result').addEventListener('change', (e) => { state.historyFilters.result = e.target.value; renderHistoryTab(); });
+  document.getElementById('filter-strategy').addEventListener('change', (e) => { state.historyFilters.strategy = e.target.value; renderHistoryTab(); });
+  document.getElementById('filter-type').addEventListener('change', (e) => { state.historyFilters.type = e.target.value; renderHistoryTab(); });
+  document.getElementById('filter-from').addEventListener('change', (e) => { state.historyFilters.from = e.target.value; renderHistoryTab(); });
+  document.getElementById('filter-to').addEventListener('change', (e) => { state.historyFilters.to = e.target.value; renderHistoryTab(); });
+  document.getElementById('clear-filters-btn').addEventListener('click', () => {
+    state.historyFilters = { search:'', result:'all', strategy:'all', type:'all', from:'', to:'', sortBy:'date', sortDir:'desc' };
+    document.getElementById('filter-search').value = '';
+    document.getElementById('filter-result').value = 'all';
+    document.getElementById('filter-strategy').value = 'all';
+    document.getElementById('filter-type').value = 'all';
+    document.getElementById('filter-from').value = '';
+    document.getElementById('filter-to').value = '';
+    renderHistoryTab();
+  });
+
+  // Sort headers
+  document.querySelector('.history-table thead').addEventListener('click', (e) => {
+    const th = e.target.closest('[data-sort]');
+    if (!th) return;
+    const field = th.dataset.sort;
+    if (state.historyFilters.sortBy === field){
+      state.historyFilters.sortDir = state.historyFilters.sortDir === 'asc' ? 'desc' : 'asc';
+    } else {
+      state.historyFilters.sortBy = field;
+      state.historyFilters.sortDir = 'desc';
+    }
+    renderHistoryTab();
+  });
+
+  // History table row actions
+  document.getElementById('history-tbody').addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-action]');
+    const row = e.target.closest('tr[data-id]');
+    if (!row) return;
+    const id = row.dataset.id;
+    if (btn){
+      const action = btn.dataset.action;
+      if (action === 'view') openTradeDetailModal(id);
+      if (action === 'edit') openEditTrade(id);
+      if (action === 'delete') confirmDeleteTrade(id);
+    } else {
+      openTradeDetailModal(id);
+    }
+  });
+
+  // Calendar nav
+  document.getElementById('cal-prev').addEventListener('click', () => changeMonth(-1));
+  document.getElementById('cal-next').addEventListener('click', () => changeMonth(1));
+  document.getElementById('cal-today').addEventListener('click', () => {
+    const d = new Date();
+    state.calendar = { year: d.getFullYear(), month: d.getMonth() };
+    renderCalendarTab();
+  });
+  document.getElementById('calendar-grid').addEventListener('click', (e) => {
+    const cell = e.target.closest('[data-date]');
+    if (cell) showDayTrades(cell.dataset.date);
+  });
+  document.getElementById('day-detail-panel').addEventListener('click', (e) => {
+    const item = e.target.closest('[data-id]');
+    if (item) openTradeDetailModal(item.dataset.id);
+  });
+
+  // Analytics psych tabs
+  document.querySelectorAll('.psych-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.activePsych = btn.dataset.psych;
+      document.querySelectorAll('.psych-tab-btn').forEach(b => b.classList.toggle('active', b === btn));
+      renderPsychBreakdown();
     });
   });
-}
-function getPillValue(group){
-  const active = group.querySelector('.pill.active');
-  return active ? active.dataset.value : null;
-}
-function getPillValues(group){
-  return Array.from(group.querySelectorAll('.pill.active')).map(p=>p.dataset.value);
-}
-function setPillValue(group, value){
-  group.querySelectorAll('.pill').forEach(p=>p.classList.toggle('active', p.dataset.value===value));
-}
-function setPillValues(group, values){
-  const set = new Set(values||[]);
-  group.querySelectorAll('.pill').forEach(p=>p.classList.toggle('active', set.has(p.dataset.value)));
-}
-function clearPillGroup(group){
-  group.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
-}
 
-function buildStarRating(container){
-  const row = container.querySelector('.star-row');
-  row.innerHTML='';
-  for(let i=1;i<=10;i++){
-    const s = document.createElement('button');
-    s.type='button'; s.className='star'; s.dataset.value=i; s.textContent='★';
-    s.setAttribute('aria-label','Rate '+i+' of 10');
-    row.appendChild(s);
-  }
-  row.addEventListener('click', (e)=>{
-    const star = e.target.closest('.star');
-    if(!star) return;
-    setStarValue(container, Number(star.dataset.value));
+  // Simulation
+  document.querySelectorAll('[data-sim-mode]').forEach(btn => {
+    btn.addEventListener('click', () => setSimMode(btn.dataset.simMode));
   });
-}
-function setStarValue(container, value){
-  container.dataset.value = value;
-  container.querySelectorAll('.star').forEach(s=>s.classList.toggle('filled', Number(s.dataset.value)<=value));
-  container.querySelector('.star-value').textContent = value+'/10';
-}
-function clearStarRating(container){
-  container.dataset.value = '';
-  container.querySelectorAll('.star').forEach(s=>s.classList.remove('filled'));
-  container.querySelector('.star-value').textContent = '—';
-}
-function getStarValue(container){
-  const v = container.dataset.value;
-  return v ? Number(v) : null;
-}
-function initAllStarRatings(){
-  document.querySelectorAll('.star-rating').forEach(buildStarRating);
-}
+  document.getElementById('run-sim-btn').addEventListener('click', handleRunSimulation);
 
-/* =========================================================
-   SECTION: TRADE ENTRY LOGIC (placeholder — filled next step)
-   ========================================================= */
-function wireEntryForm(){ /* PLACEHOLDER */ }
-function updateLivePreview(){ /* PLACEHOLDER */ }
-function collectFormData(){ /* PLACEHOLDER */ return null; }
-function loadTradeIntoForm(t){ /* PLACEHOLDER */ }
-function resetEntryForm(){ /* PLACEHOLDER */ }
+  // Export / Import
+  document.getElementById('export-btn').addEventListener('click', exportData);
+  document.getElementById('import-btn').addEventListener('click', () => document.getElementById('import-file').click());
+  document.getElementById('import-file').addEventListener('change', (e) => {
+    importData(e.target.files[0]);
+    e.target.value = '';
+  });
 
-/* =========================================================
-   SECTION: TRADE HISTORY LOGIC (placeholder — filled next step)
-   ========================================================= */
-function renderHistory(){ /* PLACEHOLDER */ }
-function wireHistoryControls(){ /* PLACEHOLDER */ }
-function openDetailModal(id){ /* PLACEHOLDER */ }
-
-/* =========================================================
-   SECTION: CALENDAR LOGIC (placeholder — filled next step)
-   ========================================================= */
-function renderCalendar(){ /* PLACEHOLDER */ }
-function wireCalendarControls(){ /* PLACEHOLDER */ }
-
-/* =========================================================
-   SECTION: ANALYTICS LOGIC (placeholder — filled next step)
-   ========================================================= */
-function renderAnalytics(){ /* PLACEHOLDER */ }
-
-/* =========================================================
-   SECTION: SIMULATION LOGIC (placeholder — filled next step)
-   ========================================================= */
-function wireSimulationControls(){ /* PLACEHOLDER */ }
-function renderSimulationHistoricalStats(){ /* PLACEHOLDER */ }
-
-/* =========================================================
-   SECTION: GLOBAL REFRESH & DELETE
-   ========================================================= */
-function refreshAll(){
-  renderHistory();
-  renderCalendar();
-  renderAnalytics();
-  renderSimulationHistoricalStats();
-  populateFilterOptions();
-}
-function populateFilterOptions(){
-  const instSel = document.getElementById('filterInstrument');
-  const stratSel = document.getElementById('filterStrategy');
-  const curInst = instSel.value, curStrat = stratSel.value;
-  const instruments = Array.from(new Set(trades.map(t=>t.instrument).filter(Boolean))).sort();
-  instSel.innerHTML = '<option value="">All</option>' + instruments.map(i=>`<option value="${escapeHtml(i)}">${escapeHtml(i)}</option>`).join('');
-  stratSel.innerHTML = '<option value="">All</option>' + STRATEGY_LIST.map(s=>`<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
-  instSel.value = curInst; stratSel.value = curStrat;
-}
-function deleteTrade(id){
-  const t = trades.find(x=>x.id===id);
-  if(!t) return;
-  openConfirm('Delete this trade?', 'This will permanently remove the '+(t.instrument||'trade')+' entry from '+t.date+'. This cannot be undone.', async function(){
-    trades = trades.filter(x=>x.id!==id);
-    await persistTrades();
-    closeModal('detailModal');
-    refreshAll();
-    showToast('success','Trade deleted');
+  // Storage banner dismiss
+  document.getElementById('dismiss-banner').addEventListener('click', () => {
+    document.getElementById('storage-banner').style.display = 'none';
   });
 }
 
-/* =========================================================
-   SECTION: INIT
-   ========================================================= */
+/* ============================================================
+   INIT
+   ============================================================ */
 async function init(){
-  const now = new Date();
-  calYear = now.getFullYear(); calMonth = now.getMonth();
-
-  initTabs();
-  initPillGroups();
-  initAllStarRatings();
-  wireEntryForm();
-  wireHistoryControls();
-  wireCalendarControls();
-  wireSimulationControls();
-
-  document.getElementById('btnExport').addEventListener('click', exportTrades);
-  document.getElementById('btnImport').addEventListener('click', ()=>document.getElementById('importFile').click());
-  document.getElementById('importFile').addEventListener('change', (e)=>{
-    if(e.target.files && e.target.files[0]) importTradesFromFile(e.target.files[0]);
-    e.target.value='';
-  });
-  document.getElementById('detailModalClose').addEventListener('click', ()=>closeModal('detailModal'));
-  document.getElementById('dayModalClose').addEventListener('click', ()=>closeModal('dayModal'));
-  document.getElementById('confirmModalClose').addEventListener('click', ()=>closeModal('confirmModal'));
-  document.getElementById('confirmModalCancel').addEventListener('click', ()=>closeModal('confirmModal'));
-  document.getElementById('confirmModalOk').addEventListener('click', ()=>{
-    if(confirmCallback) confirmCallback();
-    closeModal('confirmModal');
-  });
-  document.querySelectorAll('.modal-overlay').forEach(ov=>{
-    ov.addEventListener('click', (e)=>{ if(e.target===ov) ov.classList.remove('show'); });
-  });
-
-  trades = await loadTrades();
-  resetEntryForm();
-  refreshAll();
+  initBackdrop();
+  populateStrategyFilterOptions();
+  attachAllListeners();
+  await loadTrades();
+  resetForm();
+  renderHeaderStats();
+  switchTab('entry');
 }
 
 document.addEventListener('DOMContentLoaded', init);
