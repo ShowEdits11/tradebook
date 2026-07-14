@@ -348,10 +348,10 @@ html[data-theme="light"] #backdrop-wrap::before{
 .day-cell.day-neutral{background:rgba(var(--tint-rgb),0.05);cursor:pointer;}
 .day-cell.day-green:hover,.day-cell.day-red:hover,.day-cell.day-neutral:hover{transform:translateY(-2px);}
 .day-num{font-family:var(--mono);font-size:12px;color:var(--parchment-dim);}
-.day-pnl{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--parchment);margin-top:auto;}
-.day-cell.day-green .day-pnl{color:var(--green-bright);}
+.day-pnl{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--parchment);margin-top:auto;text-align:center;}
+.day-cell.day-green .day-pnl{color:var(--green-bright); margin-top: 23px;}
 .day-cell.day-red .day-pnl{color:var(--red-bright);}
-.day-count{font-size:9.5px;color:var(--parchment-faint);}
+.day-count{font-size:9.5px;color:var(--parchment-faint);text-align:center;}
 .day-detail{margin-top:16px;padding:18px 20px;display:none;}
 .day-detail.visible{display:block;}
 .day-detail-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
@@ -374,7 +374,17 @@ html[data-theme="light"] #backdrop-wrap::before{
 .donut-label{font-family:var(--sans);fill:var(--parchment-faint);font-size:10px;text-transform:uppercase;letter-spacing:0.4px;}
 .equity-svg,.spaghetti-svg{width:100%;height:auto;display:block;}
 .zero-line{stroke:rgba(var(--tint-rgb),0.18);stroke-width:1;stroke-dasharray:3 4;}
+.grid-line{stroke:rgba(var(--tint-rgb),0.07);stroke-width:1;}
 .axis-label{font-family:var(--mono);font-size:9.5px;fill:var(--parchment-faint);}
+.axis-title{font-family:var(--sans);font-size:10px;letter-spacing:0.4px;fill:var(--parchment-faint);}
+.fan-band{fill:rgba(var(--primary-rgb),0.1);stroke:rgba(var(--primary-rgb),0.22);stroke-width:1;}
+.sim-best-path{stroke:var(--green-bright);stroke-width:1.75;stroke-dasharray:5 3;stroke-linecap:round;opacity:0.85;}
+.sim-worst-path{stroke:var(--red-bright);stroke-width:1.75;stroke-dasharray:5 3;stroke-linecap:round;opacity:0.85;}
+.chart-legend{display:flex;flex-wrap:wrap;gap:14px 20px;margin-top:12px;padding-top:12px;border-top:1px solid var(--hairline);}
+.legend-item{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--parchment-dim);}
+.legend-swatch{width:14px;height:10px;border-radius:3px;border:1px solid;flex-shrink:0;}
+.legend-line{width:16px;height:3px;border-radius:2px;flex-shrink:0;}
+.legend-line-dash{background-image:linear-gradient(90deg,currentColor 60%,transparent 0%);background-size:6px 3px;background-repeat:repeat-x;background-color:transparent;}
 
 .breakdown-card{padding:20px 22px;margin-bottom:16px;}
 .breakdown-card h3{font-family:var(--serif);font-size:15px;margin:0 0 4px;color:var(--parchment);}
@@ -510,7 +520,7 @@ html[data-theme="light"] #backdrop-wrap::before{
   .calendar-grid{gap:3px;}
   .day-cell{padding:5px 4px 4px;border-radius:7px;aspect-ratio:1/1;gap:2px;}
   .day-num{font-size:11px;}
-  .day-pnl{font-size:9px;letter-spacing:-0.2px;}
+  .day-pnl{font-size:10.5px;letter-spacing:-0.2px;}
   .day-count{display:none;}
 
   .detail-emotions{grid-template-columns:1fr;}
@@ -978,8 +988,9 @@ html[data-theme="light"] #backdrop-wrap::before{
         <div class="stats-grid" id="sim-stats"></div>
         <div class="glass chart-card">
           <h3>Simulated Equity Paths</h3>
-          <p class="hint">Every faint gold line is one possible future. The bright line is the average across all of them.</p>
+          <p class="hint">The shaded band is where 80% of outcomes land (10th&ndash;90th percentile). Dashed lines mark the single best and worst runs; the solid bright line is the average.</p>
           <div id="sim-chart-container"></div>
+          <div id="sim-legend-container"></div>
         </div>
       </div>
     </section>
@@ -1353,41 +1364,111 @@ function svgDonut(segments, size){
 }
 
 function svgSpaghetti(allRuns, startBalance, width, height){
-  width = width || 640; height = height || 260;
+  width = width || 640; height = height || 320;
   if (!allRuns.length) return emptyStateHtml('Run a simulation to see projected paths.');
-  const padding = { top:16, right:16, bottom:20, left:70 };
+  const padding = { top:18, right:20, bottom:38, left:70 };
   const innerW = width - padding.left - padding.right;
   const innerH = height - padding.top - padding.bottom;
   const numPoints = allRuns[0].length;
   let minV = Infinity, maxV = -Infinity;
   allRuns.forEach(run => run.forEach(v => { if (v<minV) minV=v; if (v>maxV) maxV=v; }));
   if (minV === maxV){ minV -= 1; maxV += 1; }
+  // pad the value range slightly so lines never touch the very top/bottom edge
+  const pad = (maxV-minV)*0.04;
+  minV -= pad; maxV += pad;
   const range = maxV - minV;
   const stepX = numPoints > 1 ? innerW/(numPoints-1) : 0;
+  function xyAt(idx, val){
+    const x = padding.left + idx*stepX;
+    const y = padding.top + innerH - ((val-minV)/range)*innerH;
+    return [x,y];
+  }
   function toPath(run){
     let d = '';
     for (let i=0;i<run.length;i++){
-      const x = padding.left + i*stepX;
-      const y = padding.top + innerH - ((run[i]-minV)/range)*innerH;
+      const [x,y] = xyAt(i, run[i]);
       d += (i===0?'M':'L') + x.toFixed(1) + ',' + y.toFixed(1) + ' ';
     }
     return d;
   }
-  const sampleCount = 70;
-  const sampled = allRuns.length > sampleCount ? allRuns.filter((_,i) => i % Math.ceil(allRuns.length/sampleCount) === 0) : allRuns;
-  let svg = '<svg viewBox="0 0 ' + width + ' ' + height + '" class="spaghetti-svg" preserveAspectRatio="xMidYMid meet">';
-  const startY = padding.top + innerH - ((startBalance-minV)/range)*innerH;
-  svg += '<line x1="' + padding.left + '" y1="' + startY.toFixed(1) + '" x2="' + (width-padding.right) + '" y2="' + startY.toFixed(1) + '" class="zero-line"/>';
-  sampled.forEach(run => {
-    svg += '<path d="' + toPath(run) + '" fill="none" style="stroke:var(--primary)" stroke-width="1" opacity="0.13"/>';
+
+  // -- 10th/90th percentile band, sampled at reduced resolution for performance --
+  const bandN = Math.min(numPoints, 60);
+  const bandIdx = [];
+  for (let k=0;k<bandN;k++) bandIdx.push(Math.round(k*(numPoints-1)/Math.max(1,bandN-1)));
+  function percentileAt(idx, pct){
+    const vals = allRuns.map(r => r[idx]).sort((a,b) => a-b);
+    const pos = pct/100*(vals.length-1);
+    const lo = Math.floor(pos), hi = Math.ceil(pos);
+    return lo===hi ? vals[lo] : vals[lo] + (vals[hi]-vals[lo])*(pos-lo);
+  }
+  const p90pts = bandIdx.map(idx => xyAt(idx, percentileAt(idx,90)));
+  const p10pts = bandIdx.map(idx => xyAt(idx, percentileAt(idx,10)));
+  let bandPath = 'M' + p90pts.map(p => p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L');
+  bandPath += ' L' + [...p10pts].reverse().map(p => p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L') + ' Z';
+
+  // -- best / worst individual runs (by final balance) --
+  let bestRun = allRuns[0], worstRun = allRuns[0];
+  allRuns.forEach(r => {
+    if (r[r.length-1] > bestRun[bestRun.length-1]) bestRun = r;
+    if (r[r.length-1] < worstRun[worstRun.length-1]) worstRun = r;
   });
+
+  const sampleCount = 50;
+  const sampled = allRuns.length > sampleCount ? allRuns.filter((_,i) => i % Math.ceil(allRuns.length/sampleCount) === 0) : allRuns;
+
+  let svg = '<svg viewBox="0 0 ' + width + ' ' + height + '" class="spaghetti-svg" preserveAspectRatio="xMidYMid meet">';
+
+  // gridlines + Y-axis value labels (5 lines across the range)
+  const gridN = 4;
+  for (let g=0; g<=gridN; g++){
+    const val = minV + range*g/gridN;
+    const y = padding.top + innerH - (g/gridN)*innerH;
+    svg += '<line x1="' + padding.left + '" y1="' + y.toFixed(1) + '" x2="' + (width-padding.right) + '" y2="' + y.toFixed(1) + '" class="grid-line"/>';
+    svg += '<text x="' + (padding.left-8) + '" y="' + (y+3.5).toFixed(1) + '" class="axis-label" text-anchor="end">' + esc(formatCurrencyShort(val)) + '</text>';
+  }
+  // X-axis trade-number ticks
+  const xTickN = 5;
+  for (let t=0; t<=xTickN; t++){
+    const idx = Math.round((numPoints-1) * t/xTickN);
+    const x = padding.left + idx*stepX;
+    svg += '<text x="' + x.toFixed(1) + '" y="' + (height-padding.bottom+16) + '" class="axis-label" text-anchor="middle">' + idx + '</text>';
+  }
+  svg += '<text x="' + (padding.left + innerW/2) + '" y="' + (height-4) + '" class="axis-label axis-title" text-anchor="middle">Trade #</text>';
+
+  // percentile fan band
+  svg += '<path d="' + bandPath + '" class="fan-band"/>';
+
+  // start balance reference
+  const [,startY] = xyAt(0, startBalance);
+  svg += '<line x1="' + padding.left + '" y1="' + startY.toFixed(1) + '" x2="' + (width-padding.right) + '" y2="' + startY.toFixed(1) + '" class="zero-line"/>';
+  svg += '<text x="' + (padding.left+4) + '" y="' + (startY-5).toFixed(1) + '" class="axis-label">start ' + esc(formatCurrencyShort(startBalance)) + '</text>';
+
+  // individual sampled runs (texture)
+  sampled.forEach(run => {
+    svg += '<path d="' + toPath(run) + '" fill="none" style="stroke:var(--primary)" stroke-width="1" opacity="0.11"/>';
+  });
+
+  // worst / best highlighted paths
+  svg += '<path d="' + toPath(worstRun) + '" fill="none" class="sim-worst-path"/>';
+  svg += '<path d="' + toPath(bestRun) + '" fill="none" class="sim-best-path"/>';
+
+  // average path, most prominent
   const avgRun = allRuns[0].map((_,i) => allRuns.reduce((s,r) => s + r[i], 0) / allRuns.length);
   svg += '<path d="' + toPath(avgRun) + '" fill="none" style="stroke:var(--primary-bright)" stroke-width="2.75" stroke-linecap="round"/>';
-  svg += '<text x="6" y="' + (padding.top+4) + '" class="axis-label">' + esc(formatCurrencyShort(maxV)) + '</text>';
-  svg += '<text x="6" y="' + (height-padding.bottom) + '" class="axis-label">' + esc(formatCurrencyShort(minV)) + '</text>';
-  svg += '<text x="' + (padding.left+4) + '" y="' + (startY-5) + '" class="axis-label">start ' + esc(formatCurrencyShort(startBalance)) + '</text>';
+
   svg += '</svg>';
   return svg;
+}
+
+function simLegendHtml(){
+  return '<div class="chart-legend">' +
+    '<div class="legend-item"><span class="legend-swatch" style="background:rgba(var(--primary-rgb),0.18);border-color:rgba(var(--primary-rgb),0.35);"></span>10th\u201390th percentile range</div>' +
+    '<div class="legend-item"><span class="legend-line" style="background:var(--primary-bright);"></span>Average path</div>' +
+    '<div class="legend-item"><span class="legend-line legend-line-dash" style="color:var(--green-bright);"></span>Best run</div>' +
+    '<div class="legend-item"><span class="legend-line legend-line-dash" style="color:var(--red-bright);"></span>Worst run</div>' +
+    '<div class="legend-item"><span class="legend-line" style="background:var(--primary);opacity:0.35;"></span>Individual runs</div>' +
+  '</div>';
 }
 
 function breakdownRowsHtml(groups){
@@ -2063,6 +2144,7 @@ function renderSimResults(result){
     { label:'Worst Max Drawdown', value: s.worstMaxDD.toFixed(1)+'%', tone:'red' }
   ]);
   document.getElementById('sim-chart-container').innerHTML = svgSpaghetti(result.allRuns, s.startBalance);
+  document.getElementById('sim-legend-container').innerHTML = simLegendHtml();
 }
 
 function handleRunSimulation(){
